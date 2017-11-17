@@ -52,11 +52,13 @@ public class Racer {
         return sprite;
     }
 
+    //Uppdaterar bilens position beroende på hur snabbt man kör.
     public void updatePostion(){
         setX(getX() + getSpeedX());
         setY(getY() + getSpeedY());
     }
 
+    //Metod för att rita ut objekt.
     public void draw(SpriteBatch batch){
         sprite.draw(batch);
     }
