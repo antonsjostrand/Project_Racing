@@ -15,35 +15,35 @@ public class Opponent extends Racer {
 
     //Metod för att flytta motståndaren enligt dess koordinater
     public void followTrack(){
-        if(getX() == 50 && getY() == 50){
+        if(getX() <= 605 && getY() <= 100){
             setSpeedX(3);
             setSpeedY(0);
         }
-        else if(getX() >= 1300 && getY() == 50){
+        else if(getX() >= 1200 && getY() == 100){
             setSpeedX(0);
             setSpeedY(3);
         }
-        else if(getX() >=1300 && getY() >= 600){
+        else if(getX() >=1200 && getY() >= 400){
             setSpeedY(0);
             setSpeedX(-3);
         }
-        else if(getX() <=50 && getY() >= 600){
+        else if(getX() <= 50 && getY() >= 400){
             setSpeedX(0);
             setSpeedY(-3);
         }
     }
 
     public void changeDirection(){
-        if(getX() >= 1300 && getY() == 50){
+        if(getX() >= 1200 && getY() == 100){
             getSprite().setRotation(90);
         }
-        else if(getX() >= 1300 && getY() >=600){
+        else if(getX() >= 1200 && getY() >=400){
             getSprite().setRotation(180);
         }
-        else if(getX() <= 50 && getY() >= 600){
+        else if(getX() <= 50 && getY() >= 400){
             getSprite().setRotation(270);
         }
-        else if(getX() <= 50 && getY() <= 50){
+        else if(getX() <= 50 && getY() <= 100){
             getSprite().setRotation(360);
         }
 

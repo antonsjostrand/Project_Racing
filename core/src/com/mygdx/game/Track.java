@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Track {
-    Sprite sprite;
+        private Sprite sprite;
 
         public Track(String image, float x, float y, float sizeX, float sizeY){
             sprite = new Sprite(new Texture(image));
