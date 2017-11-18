@@ -32,7 +32,7 @@ public class Opponent extends Racer {
             setSpeedY(-3);
         }
     }
-
+    //Metod för att ändra riktningen på motståndarens bild.
     public void changeDirection(){
         if(getX() >= 1200 && getY() == 100){
             getSprite().setRotation(90);

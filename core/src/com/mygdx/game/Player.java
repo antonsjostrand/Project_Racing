@@ -95,21 +95,21 @@ public class Player extends Racer{
         setSpeedY(0);
     }
 
-    //Metod för att förändra rotationen och spelarens plats på Y-axlen.
+    //Metod för att förändra rotationen och spelarens position på Y-axlen.
     public void turnLeft(){
         getSprite().rotate(2);
 
         if ((getSprite().getRotation() >= 0 && getSprite().getRotation() < 90)){
-            getSprite().translateY(1);
+            getSprite().translateY(0.1f);
         }
         else if(getSprite().getRotation() >= 90 && getSprite().getRotation() < 180){
-            getSprite().translateX(-1);
+            getSprite().translateX(-0.1f);
         }
         else if(getSprite().getRotation() >= 180 && getSprite().getRotation() < 270){
-            getSprite().translateY(-1);
+            getSprite().translateY(-0.1f);
         }
         else if(getSprite().getRotation() >= 270 && getSprite().getRotation() < 360){
-            getSprite().translateX(1);
+            getSprite().translateX(0.1f);
         }
         else if(getSprite().getRotation() >= 360){
             getSprite().setRotation(0);
@@ -121,16 +121,16 @@ public class Player extends Racer{
         getSprite().rotate(-2);
 
         if(getSprite().getRotation() <= -1 && getSprite().getRotation() > -88){
-            getSprite().translateY(-1);
+            getSprite().translateY(-0.1f);
         }
         else if (getSprite().getRotation() <= -88 && getSprite().getRotation() > -158){
-            getSprite().translateX(-1);
+            getSprite().translateX(-0.1f);
         }
         else if (getSprite().getRotation() <= -158 && getSprite().getRotation() > -268){
-            getSprite().translateY(1);
+            getSprite().translateY(0.1f);
         }
         else if (getSprite().getRotation() <= -268 && getSprite().getRotation() > -358){
-            getSprite().translateX(1);
+            getSprite().translateX(0.1f);
         }
         else if(getSprite().getRotation() <= -358){
             getSprite().setRotation(0);
