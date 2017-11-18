@@ -19,6 +19,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Player player;
 	private Opponent opponent;
 	private BitmapFont font;
+	private String winner = "Winner: " , opponentText = "Opponent", playerText = "Player";
 
 	private int testTwo = 0;
 
@@ -33,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		createOpponent();
 
 	}
-	//Metod för att skapa motståndare
+	//Metod för att skapa motståndare 1
 	public void createOpponent(){
 		opponent = new Opponent("Opponent.png",605,100,50,25);
 		racerList.add(opponent);
@@ -69,7 +70,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				player.accelerate();
 			}
 		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+		else if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			player.brake();
 		}
 
@@ -77,30 +78,50 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		checkKeys();
 
 			//Uppdaterar positionen av samtliga Racer objekt
 			for(Racer racer : racerList){
 				racer.updatePostion();
+
+				//Kollar ifall spelaren kolliderar med en motståndare
+				if (player.collidesWithRacer(opponent.getCollisionArea())){
+					player.setSpeedX(0);
+					player.setSpeedY(0);
+				}
+				else{
+					checkKeys();
+				}
 			}
 
-
-			opponent.followTrack();
+			//Förändrar riktningen och åt vilket håll motståndaren kör
 			opponent.changeDirection();
-			int test = opponent.checkLaps(opponent);
+			opponent.followTrack();
 
+
+
+			int test = opponent.checkLaps(opponent);
 			int testTwo = player.checkLaps(player);
 
 		Gdx.gl.glClearColor(0, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 
+			//Ritar ut banan
 			for(Track track : trackList){
 				track.draw(batch);
 			}
 
+			//Ritar ut samtliga racer objekt.
 			for(Racer player : racerList){
 				player.draw(batch);
+			}
+
+			font.draw(batch, winner,700,600);
+			if (testTwo == 4){
+				font.draw(batch, playerText, 752,600);
+			}
+			if(test == 4){
+				font.draw(batch, opponentText,752,600);
 			}
 
 			font.draw(batch, String.valueOf(testTwo),100,600);

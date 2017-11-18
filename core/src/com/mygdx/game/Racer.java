@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Racer {
     private Sprite sprite;
@@ -66,11 +67,23 @@ public class Racer {
         if ((x >= 690 && x <= 693) && (y >= 46 && y <= 205)){
             laps++;
             if(laps == 4){
-                System.exit(0);
+                //System.exit(0);
             }
         }
-
         return laps;
+    }
+
+    public Rectangle getCollisionArea(){
+        return new Rectangle(
+                getSprite().getX(),
+                getSprite().getY(),
+                getSprite().getWidth(),
+                getSprite().getHeight()
+        );
+    }
+
+    public boolean collidesWithRacer(Rectangle rectangle){
+        return getCollisionArea().overlaps(rectangle);
     }
 
     //Metod för att rita ut objekt.

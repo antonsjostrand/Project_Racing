@@ -91,8 +91,20 @@ public class Player extends Racer{
 
     //Metod för att bromsa spelarens bil
     public void brake(){
-        setSpeedX(0);
-        setSpeedY(0);
+        if(getSpeedX() > 0){
+            setSpeedX(getSpeedX()-1);
+        }
+        else if(getSpeedX() < 0){
+            setSpeedX(getSpeedX()+1);
+        }
+        if(getSpeedY() > 0){
+            setSpeedY(getSpeedY()-1);
+        }
+        else if(getSpeedY() < 0){
+            setSpeedY(getSpeedY()+1);
+        }
+
+
     }
 
     //Metod för att förändra rotationen och spelarens position på Y-axlen.
