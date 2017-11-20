@@ -7,8 +7,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Racer {
     private Sprite sprite;
-    private int speedX = 0, speedY = 0;
+    private float speedX = 0, speedY = 0;
     private int laps = 0;
+    private final float SHRINK_COLLISION_RADIUS_HEIGHT, SHRINK_COLLISION_RADIUS_WIDTH;
 
 
     public Racer(String image, float x, float y, float sizeX, float sizeY){
@@ -16,6 +17,8 @@ public class Racer {
         sprite.setX(x);
         sprite.setY(y);
         sprite.setSize(sizeX, sizeY);
+        SHRINK_COLLISION_RADIUS_HEIGHT = getSprite().getHeight()/8;
+        SHRINK_COLLISION_RADIUS_WIDTH = getSprite().getWidth()/8;
     }
 
     public float getX(){
@@ -34,19 +37,19 @@ public class Racer {
         sprite.setY(y);
     }
 
-    public int getSpeedX() {
+    public float getSpeedX() {
         return speedX;
     }
 
-    public void setSpeedX(int speedX) {
+    public void setSpeedX(float speedX) {
         this.speedX = speedX;
     }
 
-    public int getSpeedY() {
+    public float getSpeedY() {
         return speedY;
     }
 
-    public void setSpeedY(int speedY) {
+    public void setSpeedY(float speedY) {
         this.speedY = speedY;
     }
 
@@ -75,14 +78,18 @@ public class Racer {
 
     public Rectangle getCollisionArea(){
         return new Rectangle(
-                getSprite().getX(),
-                getSprite().getY(),
-                getSprite().getWidth(),
-                getSprite().getHeight()
+                getSprite().getX() + SHRINK_COLLISION_RADIUS_WIDTH,
+                getSprite().getY() + SHRINK_COLLISION_RADIUS_HEIGHT,
+                getSprite().getWidth() - (4*SHRINK_COLLISION_RADIUS_WIDTH),
+                getSprite().getHeight() - (4*SHRINK_COLLISION_RADIUS_HEIGHT)
         );
     }
 
     public boolean collidesWithRacer(Rectangle rectangle){
+        return getCollisionArea().overlaps(rectangle);
+    }
+
+    public boolean insideTrack(Rectangle rectangle) {
         return getCollisionArea().overlaps(rectangle);
     }
 
