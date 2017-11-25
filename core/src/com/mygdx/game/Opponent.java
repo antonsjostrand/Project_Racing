@@ -23,11 +23,11 @@ public class Opponent extends Racer {
             setSpeedX(0);
             setSpeedY(3);
         }
-        else if(getX() >=1200 && getY() >= 400){
+        else if(getX() >=1200 && getY() >= 500){
             setSpeedY(0);
             setSpeedX(-3);
         }
-        else if(getX() <= 50 && getY() >= 400){
+        else if(getX() <= 50 && getY() >= 500){
             setSpeedX(0);
             setSpeedY(-3);
         }
@@ -37,10 +37,10 @@ public class Opponent extends Racer {
         if(getX() >= 1200 && getY() == 100){
             getSprite().setRotation(90);
         }
-        else if(getX() >= 1200 && getY() >=400){
+        else if(getX() >= 1200 && getY() >=500){
             getSprite().setRotation(180);
         }
-        else if(getX() <= 50 && getY() >= 400){
+        else if(getX() <= 50 && getY() >= 500){
             getSprite().setRotation(270);
         }
         else if(getX() <= 50 && getY() <= 100){

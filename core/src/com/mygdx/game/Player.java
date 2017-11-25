@@ -272,4 +272,35 @@ public class Player extends Racer{
         }
     }
 
+    public void bounceOfEdge(){
+        if(getX() > 1336){
+            setSpeedX(-3);
+        }
+        else if(getX() < 30){
+            setSpeedX(3);
+        }
+        else if(getY() > 588){
+            setSpeedY(-3);
+        }
+        else if(getY() < 30){
+            setSpeedY(3);
+        }
+    }
+
+    public void setSpeedOutOfBounds(){
+        if(getSpeedX() > 0){
+            setSpeedX(0.1f);
+        }
+        if(getSpeedX() < 0){
+            setSpeedX(-0.1f);
+        }
+        if(getSpeedY() > 0){
+            setSpeedY(0.1f);
+        }
+        if(getSpeedY() < 0){
+            setSpeedY(-0.1f);
+        }
+
+    }
+
 }

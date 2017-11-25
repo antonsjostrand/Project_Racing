@@ -44,6 +44,12 @@ public class Track {
              );
           }
 
+        public Rectangle trackPartArea(float x, float y, float width, float height){
+            return new Rectangle(x,y,width,height);
+        }
+
+        //SKAPA EN METOD SOM AVGÖR OM AMN KAN FLYTTA TILL EN VISS POSITION (canIMoveHere) typ.
+
 
         public void draw(SpriteBatch batch){
             sprite.draw(batch);
