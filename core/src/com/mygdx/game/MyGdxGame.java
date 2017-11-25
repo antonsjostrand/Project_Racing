@@ -239,9 +239,14 @@ public class MyGdxGame extends ApplicationAdapter {
 					!player.insideTrack(levelTwoPartThree) && !player.insideTrack(levelTwoPartFour) &&
 					!player.insideTrack(levelTwoPartFive) && !player.insideTrack(levelTwoPartSix) &&
 					!player.insideTrack(levelTwoPartSeven) && !player.insideTrack(levelTwoPartEight)){
-				player.bounceOfEdge();
+
+				if(player.getX() > 1336 || player.getX() < 30 || player.getY() > 588 || player.getY() < 30) {
+					player.bounceOfEdge();
+				}
+				else{
 				player.setSpeedOutOfBounds();
 				checkKeysOutOfBounds();
+				}
 			}
 		}
 
