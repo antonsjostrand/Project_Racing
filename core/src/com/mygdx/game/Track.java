@@ -44,11 +44,15 @@ public class Track {
              );
           }
 
+        //Metod som skapar en rektangel som sedan används för att kolla så att man kör på banan.
         public Rectangle trackPartArea(float x, float y, float width, float height){
             return new Rectangle(x,y,width,height);
         }
 
-        //SKAPA EN METOD SOM AVGÖR OM AMN KAN FLYTTA TILL EN VISS POSITION (canIMoveHere) typ.
+        //Metod som skall kolla ifall den punkt man anger går att köra till.
+        public void checkTrack(){
+
+        }
 
 
         public void draw(SpriteBatch batch){

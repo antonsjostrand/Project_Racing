@@ -89,6 +89,7 @@ public class Player extends Racer{
             }
     }
 
+    //Metod som används för att flytta på spelaren när den kör utanför banan.
     public void accelerateOutOfBounds(){
         if(getSprite().getRotation() >= 0 && getSprite().getRotation() < 25){
             setSpeedX(0.1f);
@@ -170,20 +171,181 @@ public class Player extends Racer{
         }
     }
 
+    //Metod som används när spelaren inte håller inne UP-tangenten.
+    public void noAccelerate(){
+        if(getSprite().getRotation() >= 0 && getSprite().getRotation() < 25){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 25 && getSprite().getRotation() < 65){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 65 && getSprite().getRotation() < 115){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 115 && getSprite().getRotation() < 155){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 155 && getSprite().getRotation() < 205){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 205 && getSprite().getRotation() < 245){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 245 && getSprite().getRotation() < 295){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 295 && getSprite().getRotation() < 335){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() == 360){
+            getSprite().setRotation(0);
+        }
+        else if(getSprite().getRotation() >= 335 && getSprite().getRotation() < 25){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        if(getSprite().getRotation() <= 0 && getSprite().getRotation() > -25){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -25 && getSprite().getRotation() > -65){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -65 && getSprite().getRotation() > -115){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -115 && getSprite().getRotation() > -155){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -155 && getSprite().getRotation() > -205){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -205 && getSprite().getRotation() > -245){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -245 && getSprite().getRotation() > -295){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -295 && getSprite().getRotation() > -335){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() == -360){
+            getSprite().setRotation(0);
+        }
+        else if(getSprite().getRotation() <= -335 && getSprite().getRotation() > -25){
+            setSpeedX(0);
+            setSpeedY(0);
+        }
+    }
+
     //Metod för att bromsa spelarens bil
     public void brake(){
-        if(getSpeedX() >= 0){
-            setSpeedX(getSpeedX()-1);
+        if(getSprite().getRotation() >= 0 && getSprite().getRotation() < 25){
+            setSpeedX(-1);
+            setSpeedY(0);
         }
-        else if(getSpeedX() <= 0){
-            setSpeedX(getSpeedX()+1);
+        else if(getSprite().getRotation() >= 25 && getSprite().getRotation() < 65){
+            setSpeedX(-1);
+            setSpeedY(-1);
         }
-        if(getSpeedY() > 0){
-            setSpeedY(getSpeedY()-1);
+        else if(getSprite().getRotation() >= 65 && getSprite().getRotation() < 115){
+            setSpeedX(0);
+            setSpeedY(-1);
         }
-        else if(getSpeedY() < 0){
-            setSpeedY(getSpeedY()+1);
+        else if(getSprite().getRotation() >= 115 && getSprite().getRotation() < 155){
+            setSpeedX(1);
+            setSpeedY(-1);
         }
+        else if(getSprite().getRotation() >= 155 && getSprite().getRotation() < 205){
+            setSpeedX(1);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 205 && getSprite().getRotation() < 245){
+            setSpeedX(1);
+            setSpeedY(1);
+        }
+        else if(getSprite().getRotation() >= 245 && getSprite().getRotation() < 295){
+            setSpeedX(0);
+            setSpeedY(1);
+        }
+        else if(getSprite().getRotation() >= 295 && getSprite().getRotation() < 335){
+            setSpeedX(-1);
+            setSpeedY(1);
+        }
+        else if(getSprite().getRotation() == 360){
+            getSprite().setRotation(0);
+        }
+        else if(getSprite().getRotation() >= 335 && getSprite().getRotation() < 25){
+            setSpeedX(-1);
+            setSpeedY(0);
+        }
+        if(getSprite().getRotation() <= 0 && getSprite().getRotation() > -25){
+            setSpeedX(-1);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -25 && getSprite().getRotation() > -65){
+            setSpeedX(-1);
+            setSpeedY(1);
+        }
+        else if(getSprite().getRotation() <= -65 && getSprite().getRotation() > -115){
+            setSpeedX(0);
+            setSpeedY(1);
+        }
+        else if(getSprite().getRotation() <= -115 && getSprite().getRotation() > -155){
+            setSpeedX(1);
+            setSpeedY(1);
+        }
+        else if(getSprite().getRotation() <= -155 && getSprite().getRotation() > -205){
+            setSpeedX(1);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -205 && getSprite().getRotation() > -245){
+            setSpeedX(1);
+            setSpeedY(-1);
+        }
+        else if(getSprite().getRotation() <= -245 && getSprite().getRotation() > -295){
+            setSpeedX(0);
+            setSpeedY(-1);
+        }
+        else if(getSprite().getRotation() <= -295 && getSprite().getRotation() > -335){
+            setSpeedX(-1);
+            setSpeedY(-1);
+        }
+        else if(getSprite().getRotation() == -360){
+            getSprite().setRotation(0);
+        }
+        else if(getSprite().getRotation() <= -335 && getSprite().getRotation() > -25){
+            setSpeedX(-1);
+            setSpeedY(0);
+        }
+
+      //  if(getSpeedX() >= 0){
+      //      setSpeedX(getSpeedX()-1);
+      //  }
+     //   else if(getSpeedX() <= 0){
+      //      setSpeedX(getSpeedX()+1);
+      //  }
+     //   if(getSpeedY() > 0){
+     //       setSpeedY(getSpeedY()-1);
+     //   }
+     //   else if(getSpeedY() < 0){
+    //        setSpeedY(getSpeedY()+1);
+    //    }
 
 
     }
@@ -209,6 +371,7 @@ public class Player extends Racer{
         }
     }
 
+    //Metod för att förändra rotationen och spelarens position på Y-axlen när man är utanför banan.
     public void turnLeftOutOfBounds(){
         getSprite().rotate(0.01f);
 
@@ -251,6 +414,7 @@ public class Player extends Racer{
         }
     }
 
+    //Metod för att förändra rotationen och spelarens position på Y-axlen utanför banan.
     public void turnRightOutOfBounds(){
         getSprite().rotate(-0.01f);
 
@@ -272,21 +436,23 @@ public class Player extends Racer{
         }
     }
 
+    //Metod som används för att spelaren inte ska kunna köra utanför skärmen.
     public void bounceOfEdge(){
         if(getX() > 1336){
             setSpeedX(-3);
         }
-        else if(getX() < 30){
+        else if(getX() < 1){
             setSpeedX(3);
         }
         else if(getY() > 588){
             setSpeedY(-3);
         }
-        else if(getY() < 30){
+        else if(getY() < 1){
             setSpeedY(3);
         }
     }
 
+    //Metod som gör så att så fort man är utanför banan så kör man saktare.
     public void setSpeedOutOfBounds(){
         if(getSpeedX() > 0){
             setSpeedX(0.1f);

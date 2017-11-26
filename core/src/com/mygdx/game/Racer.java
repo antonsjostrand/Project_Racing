@@ -76,6 +76,7 @@ public class Racer {
         return laps;
     }
 
+    //Skapar en rektangel av ett objekt som sedan används för att kolla ifall det kolliderar på något sätt.
     public Rectangle getCollisionArea(){
         return new Rectangle(
                 getSprite().getX() + SHRINK_COLLISION_RADIUS_WIDTH,
@@ -85,10 +86,22 @@ public class Racer {
         );
     }
 
-    public boolean collidesWithRacer(Rectangle rectangle){
-        return getCollisionArea().overlaps(rectangle);
+    //Skapar en rektangel av ett objekt som sedan används för att kolla ifall det kolliderar på något sätt.
+    public Rectangle getCollisionAreaRacer(){
+        return new Rectangle(
+                getSprite().getX(),
+                getSprite().getY(),
+                getSprite().getWidth(),
+                getSprite().getHeight() + 10
+        );
     }
 
+    //Metod som tar en rektangel som parameter och sedan kollar ifall en racer kolliderar med en annan.
+    public boolean collidesWithRacer(Rectangle rectangle){
+        return getCollisionAreaRacer().overlaps(rectangle);
+    }
+
+    //Metod som tar en rektangel som parameter och sedan kollar ifall spelaren kör innanför eller utanför banan.
     public boolean insideTrack(Rectangle rectangle) {
         return getCollisionArea().overlaps(rectangle);
     }

@@ -24,7 +24,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Texture img;
 
 	private Player player;
-	private Opponent opponent;
+	private Opponent opponentOne, opponentTwo, opponentThree;
 
 	private BitmapFont font;
 	private String winner = "Winner: " , opponentText = "Opponent", playerText = "Player";
@@ -48,13 +48,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		createPlayer();
 		createLevelOne();
 		createLevelTwo();
-		createOpponent();
+		createOpponentOne();
 
 	}
-	//Metod för att skapa motståndare 1
-	public void createOpponent(){
-		opponent = new Opponent("Opponent.png",605,100,50,25);
-		racerList.add(opponent);
+	//Metod för att skapa motståndare ett
+	public void createOpponentOne(){
+		opponentOne = new Opponent("Opponent.png",605,100,35,17.5f);
+		racerList.add(opponentOne);
 	}
 	//Metod för att skapa spelaren
 	public void createPlayer(){
@@ -66,7 +66,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		Track HUD = new Track("Opponent.png",0,618,1366,150);
 		levelTwo[9] = HUD;
 	}
-	//Metod för att skapa banor.
+	//Skapar level ett och rektanglar som representerar en del av banan.
 	public void createLevelOne(){
 		Track levelOneTrack = new Track("LevelOneTemplate.png",0,0,1366,618);
 		trackList.add(levelOneTrack);
@@ -91,7 +91,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 
 	}
-
+	//Skapar level två och de rektanglar som representerar en del av banan.
 	public void createLevelTwo(){
 		Track levelTwoTrack = new Track("LevelTwoTemplate.png",0,0,1366,618);
 		trackList.add(levelTwoTrack);
@@ -130,23 +130,25 @@ public class MyGdxGame extends ApplicationAdapter {
 		levelTwo[7] = roadEight;
 
 	}
-
+	//Metod som används för att rendera level ett.
 	public GameState renderLevelOne(){
 		//Uppdaterar positionen av samtliga Racer objekt
 		for(Racer racer : racerList){
 			racer.updatePostion();
 
+			//Kollar vilka knappar som är intryckta
 			checkKeys();
 
 			//Kollar ifall spelaren kolliderar med en motståndare
-			if (player.collidesWithRacer(opponent.getCollisionArea())){
+			if (player.collidesWithRacer(opponentOne.getCollisionArea())){
 				player.setSpeedX(0);
 				player.setSpeedY(0);
 			}
 
-			//Kollar ifall spelaren är på banan eller utanför.
+
+			//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
 			if(!player.insideTrack(partOne) && !player.insideTrack(partTwo) &&
-					!player.insideTrack(partThree) && !player.insideTrack(partFour)){
+				!player.insideTrack(partThree) && !player.insideTrack(partFour)){
 
 				if(player.getX() > 1336 || player.getX() < 30 || player.getY() > 588 || player.getY() < 30){
 					player.bounceOfEdge();
@@ -154,30 +156,27 @@ public class MyGdxGame extends ApplicationAdapter {
 				else{
 					checkKeysOutOfBounds();
 				}
-
-
-				player.setSpeedOutOfBounds();
+					player.setSpeedOutOfBounds();
 
 			}
 
 		}
 
 		//Ändrar riktningen och åt vilket håll motståndaren kör
-		opponent.changeDirection();
-		opponent.followTrack();
+		opponentOne.changeDirectionLevelOne();
+		opponentOne.followTrackLevelOne();
 
-		int test = opponent.checkLaps(opponent);
+		int test = opponentOne.checkLaps(opponentOne);
 		int testTwo = player.checkLaps(player);
 
 		Gdx.gl.glClearColor(0, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 
-
-
 		//Ritar ut level ett.
 		trackList.get(0).draw(batch);
 
+		//Ritar ut HUD:en (RÖDA FÄLTET)
 		levelTwo[9].draw(batch);
 
 		//Kontrollerar så att arean av delarna stämmer.
@@ -191,6 +190,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			player.draw(batch);
 		}
 
+		//Ritar ut vinnarens namn.
 		font.draw(batch, winner,700,600);
 		if (testTwo == 4){
 			font.draw(batch, playerText, 752,600);
@@ -204,12 +204,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		font.draw(batch, String.valueOf(test), 100,700);
 		batch.end();
 
+		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
 		if (test == 4 || testTwo == 4 ){
 			gameState = GameState.LEVELTWO;
 
 			player.setX(605);
 			player.setY(155);
 			player.getSprite().setRotation(0);
+
+			opponentOne.setX(605);
+			opponentOne.setY(100);
+			opponentOne.getSprite().setRotation(0);
 
 			test = 0;
 			testTwo = 0;
@@ -224,32 +229,34 @@ public class MyGdxGame extends ApplicationAdapter {
 		for(Racer racer : racerList){
 			racer.updatePostion();
 
-
-			player.bounceOfEdge();
+			//Kollar vilka knappar som är intryckta
 			checkKeys();
 
 			//Kollar ifall spelaren kolliderar med en motståndare
-			if (player.collidesWithRacer(opponent.getCollisionArea())){
+			if (player.collidesWithRacer(opponentOne.getCollisionArea())){
 				player.setSpeedX(0);
 				player.setSpeedY(0);
 			}
 
 			//Kollar ifall spelaren är på banan eller utanför.
 			if(!player.insideTrack(levelTwoPartOne) && !player.insideTrack(levelTwoPartTwo) &&
-					!player.insideTrack(levelTwoPartThree) && !player.insideTrack(levelTwoPartFour) &&
-					!player.insideTrack(levelTwoPartFive) && !player.insideTrack(levelTwoPartSix) &&
-					!player.insideTrack(levelTwoPartSeven) && !player.insideTrack(levelTwoPartEight)){
+				!player.insideTrack(levelTwoPartThree) && !player.insideTrack(levelTwoPartFour) &&
+				!player.insideTrack(levelTwoPartFive) && !player.insideTrack(levelTwoPartSix) &&
+				!player.insideTrack(levelTwoPartSeven) && !player.insideTrack(levelTwoPartEight)){
 
-				if(player.getX() > 1336 || player.getX() < 30 || player.getY() > 588 || player.getY() < 30) {
-					player.bounceOfEdge();
-				}
-				else{
-				player.setSpeedOutOfBounds();
-				checkKeysOutOfBounds();
-				}
+					if(player.getX() > 1336 || player.getX() < 30 || player.getY() > 588 || player.getY() < 30) {
+						player.bounceOfEdge();
+					}
+					else{
+						checkKeysOutOfBounds();
+					}
+						player.setSpeedOutOfBounds();
 			}
 		}
 
+		//Kallar på metoderna som flyttar motståndare ett
+		opponentOne.followTrackLevelTwo();
+		opponentOne.changeDirectionLevelTwo();
 
 
 
@@ -259,6 +266,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//Ritar ut level två
 		trackList.get(1).draw(batch);
+
+		//Ritar ut HUD:en
+		levelTwo[9].draw(batch);
 
 		//Kontroll av arean så den stämmer.
 		//levelTwo[0].draw(batch);
@@ -271,13 +281,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		//levelTwo[7].draw(batch);
 
 
-
+		//Ritar ut samtliga racing objekt
 		for(Racer player : racerList){
 			player.draw(batch);
 		}
 
 
-
+		//Ritar ut vinnarens namn
 		font.draw(batch, winner,700,600);
 		if (testTwo == 4){
 			font.draw(batch, playerText, 752,600);
@@ -292,58 +302,44 @@ public class MyGdxGame extends ApplicationAdapter {
 
         batch.end();
 
-    }
+        //Skapa återställlnings IF eller metod.
 
+    }
 
 
 	//Metod som kontrollerar om spelaren trycker på några tangenter.
 	public void checkKeys(){
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-				player.accelerate();
-				player.turnLeft();
-			}
-			else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				player.accelerate();
-				player.turnRight();
-			}
-			else{
-				player.accelerate();
-			}
+			player.accelerate();
 		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 			player.brake();
 		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		else if(!Gdx.input.isKeyPressed(Input.Keys.UP)){
+			player.noAccelerate();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			player.turnRight();
 		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.turnLeft();
 		}
 
+
 	}
 
+	//Metod som kontrollerar om spelaren trycker på några tangenterna när han är utanför banan.
 	public void checkKeysOutOfBounds(){
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-				player.accelerateOutOfBounds();
-				player.turnLeftOutOfBounds();
-			}
-			else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				player.accelerateOutOfBounds();
-				player.turnRightOutOfBounds();
-			}
-			else{
-				player.accelerateOutOfBounds();
-			}
+			player.accelerateOutOfBounds();
 		}
-		else if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 			player.brake();
 		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			player.turnRightOutOfBounds();
 		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.turnLeftOutOfBounds();
 		}
 
