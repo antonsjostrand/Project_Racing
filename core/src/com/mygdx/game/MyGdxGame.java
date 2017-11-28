@@ -140,9 +140,9 @@ public class MyGdxGame extends ApplicationAdapter {
 			checkKeys();
 
 			//Kollar ifall spelaren kolliderar med en motståndare
-			if (player.collidesWithRacer(opponentOne.getCollisionArea())){
-				player.setSpeedX(0);
-				player.setSpeedY(0);
+			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
+				player.setSpeedX(-(player.getSpeedX()+1));
+				player.setSpeedY(-(player.getSpeedY()+1));
 			}
 
 
@@ -166,6 +166,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		opponentOne.changeDirectionLevelOne();
 		opponentOne.followTrackLevelOne();
 
+		//Ökar variablerna när spelaren/motståndaren kört ett varv.
 		int test = opponentOne.checkLaps(opponentOne);
 		int testTwo = player.checkLaps(player);
 
@@ -224,7 +225,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	//Metod som ritar ut level två.
-	public void renderLevelTwo(){
+	public GameState renderLevelTwo(){
 		//Uppdaterar positionen av samtliga Racer objekt
 		for(Racer racer : racerList){
 			racer.updatePostion();
@@ -257,6 +258,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Kallar på metoderna som flyttar motståndare ett
 		opponentOne.followTrackLevelTwo();
 		opponentOne.changeDirectionLevelTwo();
+
+		//Ökar variablerna när man kört ett varv.
+		int test = opponentOne.checkLaps(opponentOne);
+		int testTwo = player.checkLaps(player);
 
 
 
@@ -303,6 +308,8 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.end();
 
         //Skapa återställlnings IF eller metod.
+
+		return gameState;
 
     }
 

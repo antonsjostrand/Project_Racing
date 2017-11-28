@@ -77,22 +77,23 @@ public class Racer {
     }
 
     //Skapar en rektangel av ett objekt som sedan används för att kolla ifall det kolliderar på något sätt.
+    //Används för att kontrollera om spelaren är utanför banan!
     public Rectangle getCollisionArea(){
         return new Rectangle(
-                getSprite().getX() + SHRINK_COLLISION_RADIUS_WIDTH,
-                getSprite().getY() + SHRINK_COLLISION_RADIUS_HEIGHT,
-                getSprite().getWidth() - (4*SHRINK_COLLISION_RADIUS_WIDTH),
-                getSprite().getHeight() - (4*SHRINK_COLLISION_RADIUS_HEIGHT)
+                getSprite().getX() + SHRINK_COLLISION_RADIUS_WIDTH + 5,
+                getSprite().getY() + SHRINK_COLLISION_RADIUS_HEIGHT + 5,
+                getSprite().getWidth() - (5*SHRINK_COLLISION_RADIUS_WIDTH),
+                getSprite().getHeight() - (5*SHRINK_COLLISION_RADIUS_HEIGHT)
         );
     }
 
     //Skapar en rektangel av ett objekt som sedan används för att kolla ifall det kolliderar på något sätt.
     public Rectangle getCollisionAreaRacer(){
         return new Rectangle(
-                getSprite().getX(),
-                getSprite().getY(),
-                getSprite().getWidth(),
-                getSprite().getHeight() + 10
+                getSprite().getX() + SHRINK_COLLISION_RADIUS_WIDTH + 5,
+                getSprite().getY() + SHRINK_COLLISION_RADIUS_HEIGHT + 5,
+                getSprite().getWidth() - (SHRINK_COLLISION_RADIUS_WIDTH + 3),
+                getSprite().getHeight() - (SHRINK_COLLISION_RADIUS_HEIGHT)
         );
     }
 
