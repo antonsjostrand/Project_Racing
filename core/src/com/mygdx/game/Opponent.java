@@ -15,11 +15,11 @@ public class Opponent extends Racer {
 
     //Metod för att flytta motståndaren enligt dess koordinater
     public void followTrackLevelOne(){
-        if(getX() <= 605 && getY() <= 100){
+        if((getX() >= 50 && getX() < 1200) && getY() <= 100){
             setSpeedX(3);
             setSpeedY(0);
         }
-        else if(getX() >= 1200 && getY() == 100){
+        else if(getX() >= 1200 && (getY() > 90 && getY() < 110)){
             setSpeedX(0);
             setSpeedY(3);
         }
@@ -27,7 +27,7 @@ public class Opponent extends Racer {
             setSpeedY(0);
             setSpeedX(-3);
         }
-        else if(getX() <= 50 && getY() >= 500){
+        else if(getX() <= 50 && (getY() < 510 && getY() > 490)){
             setSpeedX(0);
             setSpeedY(-3);
         }
@@ -50,11 +50,11 @@ public class Opponent extends Racer {
 
     //Metod som som flyttar motståndaren på level två
     public void followTrackLevelTwo(){
-        if((getX() >= 40 && getX() < 1200) && (getY() >= 90 && getY() <= 100)){
+        if((getX() >= 40 && getX() < 1200) && (getY() >= 90 && getY() <= 110)){
             setSpeedX(3);
             setSpeedY(0);
         }
-        else if((getX() >= 1200) && (getY() >= 90 && getY() <= 100)){
+        else if((getX() >= 1200) && (getY() >= 90 && getY() <= 110)){
             setSpeedX(0);
             setSpeedY(3);
         }
@@ -86,10 +86,10 @@ public class Opponent extends Racer {
 
     //Metod som förändrar en Sprites rotation/riktning på level två.
     public void changeDirectionLevelTwo(){
-        if((getX() >= 40 && getX() < 1200) && (getY() >= 90 && getY() <= 100)){
+        if((getX() >= 40 && getX() < 1200) && (getY() >= 90 && getY() <= 110)){
             getSprite().setRotation(0);
         }
-        else if((getX() >= 1200) && (getY() >= 90 && getY() <= 100)){
+        else if((getX() >= 1200) && (getY() >= 90 && getY() <= 110)){
             getSprite().setRotation(90);
         }
         else if((getX() >= 1200) && getY() >= 500) {

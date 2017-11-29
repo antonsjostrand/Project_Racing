@@ -16,6 +16,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private ArrayList<Track> trackList = new ArrayList<>();
 	private Track[] levelOne = new Track[4];
 	private Track[] levelTwo = new Track[10];
+	private Track[] levelThree = new Track[12];
 
 	private enum GameState{LEVELONE, LEVELTWO, LEVELTHREE, MAINMENU, LEVELCHANGE};
 	private GameState gameState = GameState.LEVELONE;
@@ -32,6 +33,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Rectangle partOne, partTwo, partThree, partFour;
 	private Rectangle levelTwoPartOne, levelTwoPartTwo, levelTwoPartThree, levelTwoPartFour,
 					levelTwoPartFive, levelTwoPartSix, levelTwoPartSeven, levelTwoPartEight;
+	private Rectangle levelThreePartOne, levelThreePartTwo, levelThreePartThree, levelThreePartFour,
+					levelThreePartFive, levelThreePartSix, levelThreePartSeven, levelThreePartEight,
+					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
 
 
@@ -128,8 +132,62 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		Track roadEight = new Track("Player.png", 45,185,140,251);
 		levelTwo[7] = roadEight;
-
 	}
+
+	public void createLevelThree(){
+		Track levelThreeTrack = new Track("LevelThreeTemplate",0,0,1366,618);
+		trackList.add(levelThreeTrack);
+
+		levelThreePartOne = levelThreeTrack.trackPartArea(45,45,1277,140);
+		levelThreePartTwo = levelThreeTrack.trackPartArea(1221,185,100,390);
+		levelThreePartThree = levelThreeTrack.trackPartArea(45,493,1178,80);
+		levelThreePartFour = levelThreeTrack.trackPartArea(45,403,60,92);
+		levelThreePartFive = levelThreeTrack.trackPartArea(45,354,862,50);
+		levelThreePartSix = levelThreeTrack.trackPartArea(906,354,90,121);
+		levelThreePartSeven = levelThreeTrack.trackPartArea(996,385,118,90);
+		levelThreePartEight = levelThreeTrack.trackPartArea(1111,204,118,90);
+		levelThreePartNine = levelThreeTrack.trackPartArea(996,204,118,90);
+		levelThreePartTen = levelThreeTrack.trackPartArea(906,204,90,121);
+		levelThreePartEleven = levelThreeTrack.trackPartArea(45,274,862,50);
+		levelThreePartTwelve = levelThreeTrack.trackPartArea(45,185,60,92);
+
+		Track roadOne = new Track("Player.png", 45,45,1277,140);
+		levelThree[0] = roadOne;
+
+		Track roadTwo = new Track("Player.png",1221,185,100,390);
+		levelThree[1] = roadTwo;
+
+		Track roadThree = new Track("Player.png", 45,493,1178,80);
+		levelThree[2] = roadThree;
+
+		Track roadFour = new Track("Player.png", 45,403,60,92);
+		levelThree[3] = roadFour;
+
+		Track roadFive = new Track("Player.png", 45,354,862,50);
+		levelThree[4] = roadFive;
+
+		Track roadSix = new Track("Player.png", 906,354,90,121);
+		levelThree[5] = roadSix;
+
+		Track roadSeven = new Track("Player.png", 996,385,118,90);
+		levelThree[6] = roadSeven;
+
+		Track roadEight = new Track("Player.png", 1111,204,90,271);
+		levelThree[7] = roadEight;
+
+		Track roadNine = new Track("Player.png", 996,204, 118,90);
+		levelThree[8] = roadNine;
+
+		Track roadTen = new Track("Player.png", 906,204,90,121);
+		levelThree[9] = roadTen;
+
+		Track roadEleven = new Track("Player.png", 45,274,862,50);
+		levelThree[10] = roadEleven;
+
+		Track roadTwelve = new Track("Player.png", 45,185,60,92);
+		levelThree[11] = roadTwelve;
+	}
+
 	//Metod som används för att rendera level ett.
 	public GameState renderLevelOne(){
 		//Uppdaterar positionen av samtliga Racer objekt
@@ -141,6 +199,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			//Kollar ifall spelaren kolliderar med en motståndare
 			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
+				//player.setX(opponentOne.getX()-50);
+				//player.setY(opponentOne.getY());
+
 				player.setSpeedX(-(player.getSpeedX()+1));
 				player.setSpeedY(-(player.getSpeedY()+1));
 			}
