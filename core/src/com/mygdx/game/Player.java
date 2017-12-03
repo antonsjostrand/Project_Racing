@@ -352,7 +352,7 @@ public class Player extends Racer{
 
     //Metod för att förändra rotationen och spelarens position på Y-axlen.
     public void turnLeft(){
-        getSprite().rotate(2);
+        getSprite().rotate(3);
 
         if ((getSprite().getRotation() >= 0 && getSprite().getRotation() < 90)){
             getSprite().translateY(0.1f);
@@ -394,7 +394,7 @@ public class Player extends Racer{
 
     //Metod för att förändra rotationen och spelarens plats på Y-axlen.
     public void turnRight(){
-        getSprite().rotate(-2);
+        getSprite().rotate(-3);
 
         if(getSprite().getRotation() <= -1 && getSprite().getRotation() > -88){
             getSprite().translateY(-0.1f);
