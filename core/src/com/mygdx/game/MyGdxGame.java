@@ -322,6 +322,11 @@ public class MyGdxGame extends ApplicationAdapter {
 			opponentOne.setY(60);
 			opponentOne.getSprite().setRotation(0);
 
+			obstacleX = rand.nextInt(1321);
+			obstacleY = rand.nextInt(618);
+			obstacle.setX(obstacleX);
+			obstacle.setY(obstacleY);
+
 			test = 0;
 			testTwo = 0;
 
@@ -348,6 +353,25 @@ public class MyGdxGame extends ApplicationAdapter {
 				player.setSpeedX(-(player.getSpeedX()+1));
 				player.setSpeedY(-(player.getSpeedY()+1));
 			}
+
+		//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
+		if (player.collidesWithObstacle(obstacle.figureArea())){
+			checkKeysOutOfBounds();
+		}
+		//Kollar ifall motståndarna kolliderar med hindret och sänker farten ifall det är sant!
+		if (opponentOne.collidesWithObstacle(obstacle.figureArea())){
+			opponentOne.opponentCollideObstacle();
+		}
+		else{
+			opponentOne.opponentNotCollideObstacle();
+		}
+
+		if (opponentTwo.collidesWithObstacle(obstacle.figureArea())){
+			opponentTwo.opponentCollideObstacle();
+		}
+		else{
+			opponentTwo.opponentNotCollideObstacle();
+		}
 
 			//Kollar ifall spelaren är på banan eller utanför.
 			if(!player.insideTrack(levelTwoPartOne) && !player.insideTrack(levelTwoPartTwo) &&
@@ -395,6 +419,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		//levelTwo[6].draw(batch);
 		//levelTwo[7].draw(batch);
 
+		//Ritar ut hinder
+		obstacle.obstacleDrawLevelTwo(obstacle, levelTwoPartOne, levelTwoPartTwo, levelTwoPartThree, levelTwoPartFour, levelTwoPartFive,
+									levelTwoPartSix, levelTwoPartSeven, levelTwoPartEight, batch);
+
 
 		//Ritar ut samtliga racing objekt
 		racerList.get(0).draw(batch);
@@ -430,6 +458,13 @@ public class MyGdxGame extends ApplicationAdapter {
 			opponentTwo.setX(605);
 			opponentTwo.setY(120);
 			opponentTwo.getSprite().setRotation(0);
+
+			obstacleX = rand.nextInt(1321);
+			obstacleY = rand.nextInt(618);
+			obstacle.setX(obstacleX);
+			obstacle.setY(obstacleY);
+
+
 
 			test = 0;
 			testTwo = 0;
