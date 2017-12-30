@@ -76,6 +76,38 @@ public class Racer {
         return laps;
     }
 
+    //Ändrar farten för samtliga opponents när de kör på ett hinder.
+    public void opponentCollideObstacle(){
+        if (getSpeedX() > 0){
+            setSpeedX(0.1f);
+        }
+        else if (getSpeedX() < 0){
+            setSpeedX(-0.1f);
+        }
+        if (getSpeedY() > 0){
+            setSpeedY(0.1f);
+        }
+        else if (getSpeedY() < 0){
+            setSpeedY(-0.1f);
+        }
+    }
+
+    //används när opponent inte kolliderar med hinder för att accelera igen
+    public void opponentNotCollideObstacle(){
+        if (getSpeedX() == 0.1f){
+            setSpeedX(3);
+        }
+        else if (getSpeedX() == -0.1f){
+            setSpeedX(-3);
+        }
+        if (getSpeedY() == 0.1f){
+            setSpeedY(3);
+        }
+        else if (getSpeedY() == -0.1f){
+            setSpeedY(-3);
+        }
+    }
+
     //Skapar en rektangel av ett objekt som sedan används för att kolla ifall det kolliderar på något sätt.
     //Används för att kontrollera om spelaren är utanför banan!
     public Rectangle getCollisionArea(){
@@ -105,6 +137,10 @@ public class Racer {
     //Metod som tar en rektangel som parameter och sedan kollar ifall spelaren kör innanför eller utanför banan.
     public boolean insideTrack(Rectangle rectangle) {
         return getCollisionArea().overlaps(rectangle);
+    }
+    //Metod som kollar ifall man kolliderar med ett hinder
+    public boolean collidesWithObstacle(Rectangle obstacle){
+        return getCollisionAreaRacer().overlaps(obstacle);
     }
 
     //Metod för att rita ut objekt.

@@ -21,14 +21,14 @@ public class Opponent extends Racer {
         }
         else if((getX() >= 1290 && getX() <= 1310) && (getY() >= 55 && getY() < 70)){
             setSpeedX(0);
-            setSpeedY(3);
+            setSpeedY(2.5f);
         }
         else if(getX() >= 1290 && getX() <=1310 && (getY() >= 545 && getY() < 550)){
-            setSpeedX(-3);
+            setSpeedX(-2.5f);
             setSpeedY(0);
         }
         else if(getX() >= 125 && getX() < 135 && getY() >= 545 && getY() < 550){
-            setSpeedY(-3);
+            setSpeedY(-2.5f);
             setSpeedX(0);
         }
         else if(getX() >= 125 && getX() <135 && getY() >= 55 && getY() < 70){
@@ -58,39 +58,39 @@ public class Opponent extends Racer {
     //Metod som som flyttar motståndaren på level två
     public void followTrackLevelTwo() {
         if (getX() >= 602 && getX() <= 606 && getY() >= 55 && getY() < 65) {
-            setSpeedX(3);
+            setSpeedX(2.5f);
             setSpeedY(0);
         }
         else if ((getX() >= 1290 && getX() <= 1310) && (getY() >= 55 && getY() < 70)) {
             setSpeedX(0);
-            setSpeedY(3);
+            setSpeedY(2.5f);
         }
         else if (getX() >= 1290 && getX() <= 1310 && (getY() >= 530 && getY() < 545)) {
-            setSpeedX(-3);
+            setSpeedX(-2.5f);
             setSpeedY(0);
         }
         else if (getX() >= 880 && getX() < 890 && getY() >= 530 && getY() < 545) {
-            setSpeedY(-3);
+            setSpeedY(-2.5f);
             setSpeedX(0);
         }
         else if (getX() >= 880 && getX() < 890 && getY() >= 230 && getY() < 245) {
-            setSpeedX(-3);
+            setSpeedX(-2.5f);
             setSpeedY(0);
         }
         else if (getX() >= 540 && getX() < 550 && getY() >= 230 && getY() < 245) {
             setSpeedX(0);
-            setSpeedY(3);
+            setSpeedY(2.5f);
         }
         else if (getX() >= 540 && getX() < 550 && getY() >= 530 && getY() < 545) {
-            setSpeedX(-3);
+            setSpeedX(-2.5f);
             setSpeedY(0);
         }
         else if (getX() >= 70 && getX() < 90 && getY() >= 530 && getY() < 545) {
             setSpeedX(0);
-            setSpeedY(-3);
+            setSpeedY(-2.5f);
         }
         else if (getX() >= 70 && getX() < 90 && getY() >= 55 && getY() < 70) {
-            setSpeedX(3);
+            setSpeedX(2.5f);
             setSpeedY(0);
         }
     }
@@ -128,55 +128,55 @@ public class Opponent extends Racer {
 
     public void followTrackLevelThree(){
         if (getX() >= 602 && getX() <= 606 && getY() >= 55 && getY() < 65) {
-            setSpeedX(3);
+            setSpeedX(2.5f);
             setSpeedY(0);
         }
         else if ((getX() >= 1290 && getX() <= 1310) && (getY() >= 55 && getY() < 70)) {
             setSpeedX(0);
-            setSpeedY(3);
+            setSpeedY(2.5f);
         }
         else if (getX() >= 1290 && getX() <= 1310 && (getY() >= 530 && getY() < 545)) {
-            setSpeedX(-3);
+            setSpeedX(-2.5f);
             setSpeedY(0);
         }
         else if (getX() >= 60 && getX() < 70 && getY() >= 530 && getY() < 545) {
-            setSpeedY(-3);
+            setSpeedY(-2.5f);
             setSpeedX(0);
         }
         else if (getX() >= 60 && getX() < 70 && getY() >= 374 && getY() < 382) {
-            setSpeedX(3);
+            setSpeedX(2.5f);
             setSpeedY(0);
         }
         else if (getX() >= 925 && getX() < 935 && getY() >= 374 && getY() < 382) {
             setSpeedX(0);
-            setSpeedY(3);
+            setSpeedY(2.5f);
         }
         else if (getX() >= 925 && getX() < 935 && getY() >= 447 && getY() < 455) {
-            setSpeedX(3);
+            setSpeedX(2.5f);
             setSpeedY(0);
         }
         else if (getX() >= 1175 && getX() < 1185 && getY() >= 447 && getY() < 455) {
             setSpeedX(0);
-            setSpeedY(-3);
+            setSpeedY(-2.5f);
         }
         else if (getX() >= 1175 && getX() < 1185 && getY() >= 221 && getY() < 228) {
-            setSpeedX(-3);
+            setSpeedX(-2.5f);
             setSpeedY(0);
         }
         else if (getX() >= 925 && getX() < 935 && getY() >= 221 && getY() < 228) {
             setSpeedX(0);
-            setSpeedY(3);
+            setSpeedY(2.5f);
         }
         else if (getX() >= 925 && getX() < 935 && getY() >= 298 && getY() < 306) {
-            setSpeedX(-3);
+            setSpeedX(-2.5f);
             setSpeedY(0);
         }
         else if (getX() >= 60 && getX() < 68 && getY() >= 298 && getY() < 306) {
             setSpeedX(0);
-            setSpeedY(-3);
+            setSpeedY(-2.5f);
         }
         else if (getX() >= 60 && getX() < 68 && getY() >= 64 && getY() < 70) {
-            setSpeedX(3);
+            setSpeedX(2.5f);
             setSpeedY(0);
         }
     }

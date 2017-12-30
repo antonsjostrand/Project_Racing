@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -18,6 +20,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Track[] levelOne = new Track[4];
 	private Track[] levelTwo = new Track[10];
 	private Track[] levelThree = new Track[12];
+	private SecureRandom rand = new SecureRandom();
 
 	private enum GameState{LEVELONE, LEVELTWO, LEVELTHREE, MAINMENU, LEVELCHANGE, FINISH};
 	private GameState gameState = GameState.LEVELONE;
@@ -25,10 +28,14 @@ public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture img;
 
+
 	private Player player;
 	private Opponent opponentOne;
 	private OpponentTwo opponentTwo;
 	private OpponentThree opponentThree;
+
+	private Obstacle obstacle;
+	private int obstacleX, obstacleY;
 
 	private BitmapFont font;
 	private String winner = "Winner: " , opponentText = "Opponent", playerText = "Player";
@@ -40,9 +47,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					levelThreePartFive, levelThreePartSix, levelThreePartSeven, levelThreePartEight,
 					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
-
-
-	private int testTwo = 0, test = 0;
+	private int testTwo = 0, test = 0, obstaclecount = 0;
 
 	@Override
 	public void create () {
@@ -57,8 +62,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		createLevelTwo();
 		createLevelThree();
 		createOpponents();
+		createObstacle();
 
 	}
+
+
 	//Metod för att skapa motståndare
 	public void createOpponents(){
 		opponentOne = new Opponent("Opponent.png",605,60,35,17.5f);
@@ -200,22 +208,39 @@ public class MyGdxGame extends ApplicationAdapter {
 		levelThree[11] = roadTwelve;
 	}
 
+	//Skapa obstacle
+	public void createObstacle(){
+		obstacleY = rand.nextInt(618);
+		obstacleX = rand.nextInt(1320);
+		obstacle = new Obstacle("Obstacle.png", obstacleX,obstacleY,50);
+	}
+
 	//Metod som används för att rendera level ett.
 	public GameState renderLevelOne(){
 		//Uppdaterar positionen av samtliga Racer objekt
 		racerList.get(0).updatePostion();
 		racerArray[0].updatePostion();
 
+
 			//Kollar vilka knappar som är intryckta
 			checkKeys();
 
 			//Kollar ifall spelaren kolliderar med en motståndare
 			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())) {
-				//player.setX(opponentOne.getX()-50);
-				//player.setY(opponentOne.getY());
-
 				player.setSpeedX(-(player.getSpeedX() + 1));
 				player.setSpeedY(-(player.getSpeedY() + 1));
+			}
+
+			//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
+			if (player.collidesWithObstacle(obstacle.figureArea())){
+				checkKeysOutOfBounds();
+			}
+
+			if (opponentOne.collidesWithObstacle(obstacle.figureArea())){
+				opponentOne.opponentCollideObstacle();
+			}
+			else{
+				opponentOne.opponentNotCollideObstacle();
 			}
 
 
@@ -258,9 +283,16 @@ public class MyGdxGame extends ApplicationAdapter {
 		//levelOne[2].draw(batch);
 		//levelOne[3].draw(batch);
 
+		//Ritar ut obstacle
+		obstacle.obstacleDrawLevelOne(obstacle, partOne, partTwo, partThree, partFour, batch);
+
 		//Ritar ut samtliga racer objekt.
 		racerList.get(0).draw(batch);
 		racerArray[0].draw(batch);
+
+
+
+
 
 		//Ritar ut vinnarens namn.
 		font.draw(batch, winner,700,600);
@@ -274,6 +306,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		//printar ut antal varv körda
 		font.draw(batch, String.valueOf(testTwo),100,600);
 		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
+		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
@@ -307,17 +341,12 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			//Kollar ifall spelaren kolliderar med en motståndare
 			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
-				player.setSpeedX(0);
-				player.setSpeedY(0);
+				player.setSpeedX(-(player.getSpeedX()+1));
+				player.setSpeedY(-(player.getSpeedY()+1));
 			}
 			if(player.collidesWithRacer(opponentTwo.getCollisionAreaRacer())){
-				player.setSpeedY(0);
-				player.setSpeedX(0);
-			}
-
-			if(opponentTwo.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
-				opponentTwo.setSpeedX(2.5f);
-				opponentTwo.setSpeedY(2.5f);
+				player.setSpeedX(-(player.getSpeedX()+1));
+				player.setSpeedY(-(player.getSpeedY()+1));
 			}
 
 			//Kollar ifall spelaren är på banan eller utanför.
@@ -468,13 +497,13 @@ public class MyGdxGame extends ApplicationAdapter {
 				player.setSpeedY(-(player.getSpeedY()+1));
 			}
 		if(player.collidesWithRacer(opponentTwo.getCollisionAreaRacer())){
-			player.setSpeedY(0);
-			player.setSpeedX(0);
+			player.setSpeedX(-(player.getSpeedX()+1));
+			player.setSpeedY(-(player.getSpeedY()+1));
 		}
 
-		if(opponentTwo.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
-			opponentTwo.setSpeedX(2.5f);
-			opponentTwo.setSpeedY(2.5f);
+		if(player.collidesWithRacer(opponentThree.getCollisionAreaRacer())){
+			player.setSpeedX(-(player.getSpeedX()+1));
+			player.setSpeedY(-(player.getSpeedY()+1));
 		}
 
 		//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
@@ -500,6 +529,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		opponentOne.changeDirectionLevelThree();
 		opponentTwo.followTrackLevelThree();
 		opponentTwo.changeDirectionLevelThree();
+		opponentThree.followTrackLevelThree();
+		opponentThree.changeDirectionLevelThree();
+
+
 
 		//Ökar variablerna när spelaren/motståndaren kört ett varv.
 		int test = opponentOne.checkLaps(opponentOne);
@@ -549,6 +582,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		//printar ut antal varv körda
 		font.draw(batch, String.valueOf(testTwo),100,600);
 		font.draw(batch, String.valueOf(test), 100,700);
+
+		//TEST COLLISION
+		font.draw(batch, String.valueOf(opponentThree.getX()),100,650);
+		font.draw(batch, String.valueOf(opponentThree.getY()),100,750);
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.

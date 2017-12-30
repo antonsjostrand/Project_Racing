@@ -49,12 +49,6 @@ public class Track {
             return new Rectangle(x,y,width,height);
         }
 
-        //Metod som skall kolla ifall den punkt man anger går att köra till.
-        public void checkTrack(){
-
-        }
-
-
         public void draw(SpriteBatch batch){
             sprite.draw(batch);
         }
