@@ -2,11 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-
 import java.security.SecureRandom;
 
 public class Obstacle extends Figure {
-
 
     private SecureRandom rand = new SecureRandom();
     private float obstacleX, obstacleY;
@@ -126,6 +124,100 @@ public class Obstacle extends Figure {
                 obstacleY = obstacleY + 50;
                 obstacle.setY(obstacleY);
             }
+            obstacle.setX(obstacleX);
+            obstacle.setY(obstacleY);
+        }
+    }
+
+    public void obstacleDrawLevelThree(Figure obstacle, Rectangle partOne, Rectangle partTwo, Rectangle partThree, Rectangle partFive,
+                                       Rectangle partSix, Rectangle partSeven, Rectangle partEight, Rectangle partNine, Rectangle partTen, Rectangle partEleven,
+                                       SpriteBatch batch) {
+        if (obstacle.figurePlacement(partOne) || obstacle.figurePlacement(partTwo) || obstacle.figurePlacement(partThree) || obstacle.figurePlacement(partFive)
+            || obstacle.figurePlacement(partSix) || obstacle.figurePlacement(partSeven) || obstacle.figurePlacement(partEight)
+            || obstacle.figurePlacement(partNine) || obstacle.figurePlacement(partTen) || obstacle.figurePlacement(partEleven)) {
+            obstacle.draw(batch);
+        }
+        else {
+            obstacleX = rand.nextInt(1251);
+            obstacleY = rand.nextInt(503);
+
+            if (obstacleX <= 70) {
+                obstacleX = obstacleX + 100;
+                obstacle.setX(obstacleX);
+            }
+            if (obstacleY <= 70) {
+                obstacleY = obstacleY + 100;
+                obstacle.setY(obstacleY);
+            }
+            if(obstacleX >= 1295){
+                obstacleX = obstacleX - 100;
+                obstacle.setX(obstacleX);
+            }
+            if (obstacleY >= 550){
+                obstacleY = obstacleY - 100;
+                obstacle.setY(obstacleY);
+            }
+            if (obstacleX >= 970){
+                obstacleX = obstacleX - 100;
+                obstacle.setX(obstacleX);
+            }
+            if (obstacleY <= 330){
+                obstacleY = obstacleY + 50;
+                obstacle.setY(obstacleY);
+            }
+            if (obstacleY <= 360){
+                obstacleY = obstacleY + 50;
+                obstacle.setY(obstacleY);
+            }
+            if  (obstacleX <= 1135){
+                obstacleX = obstacleX + 50;
+                obstacle.setX(obstacleX);
+            }
+            if (obstacleY >= 270){
+                obstacleY = obstacleY - 50;
+                obstacle.setY(obstacleY);
+            }
+            if (obstacleY >= 300){
+                obstacleY = obstacleY - 50;
+                obstacle.setY(obstacleY);
+            }
+            if(obstacleY >= 160){
+                obstacleY = obstacleY - 50;
+                obstacle.setY(obstacleY);
+            }
+            if (obstacleX <= 1295){
+                obstacleX = obstacleX + 50;
+                obstacle.setX(obstacleX);
+            }
+            if (obstacleY <= 470){
+                obstacleY = obstacleY + 50;
+                obstacle.setY(obstacleY);
+            }
+            if (obstacleY >= 425){
+                obstacleY = obstacleY - 50;
+                obstacle.setY(obstacleY);
+            }
+            if (obstacleX >= 880){
+                obstacleX = obstacleX + 50;
+                obstacle.setX(obstacleX);
+            }
+            if (obstacleY >= 450){
+                obstacleY = obstacleY - 50;
+                obstacle.setY(obstacleY);
+            }
+            if (obstacleX >= 1175){
+                obstacleX = obstacleX - 50;
+                obstacle.setX(obstacleX);
+            }
+            if (obstacleY <= 230){
+                obstacleY = obstacleY + 50;
+                obstacle.setY(obstacleY);
+            }
+            if (obstacleY <= 250){
+                obstacleY = obstacleY + 50;
+                obstacle.setY(obstacleY);
+            }
+
             obstacle.setX(obstacleX);
             obstacle.setY(obstacleY);
         }

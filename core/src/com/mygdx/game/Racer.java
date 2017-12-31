@@ -108,6 +108,22 @@ public class Racer {
         }
     }
 
+    //Används för att kontrollera ifall en motståndare plockar upp en powerup
+    public void opponentCollidePowerup(){
+        if (getSpeedX() > 0){
+            setSpeedX(5);
+        }
+        else if (getSpeedX() < 0){
+            setSpeedX(-5);
+        }
+        if (getSpeedY() > 0){
+            setSpeedY(5);
+        }
+        else if (getSpeedY() < 0){
+            setSpeedY(-5);
+        }
+    }
+
     //Skapar en rektangel av ett objekt som sedan används för att kolla ifall det kolliderar på något sätt.
     //Används för att kontrollera om spelaren är utanför banan!
     public Rectangle getCollisionArea(){
@@ -143,6 +159,10 @@ public class Racer {
         return getCollisionAreaRacer().overlaps(obstacle);
     }
 
+    //Metod som kollar ifall man kolliderar med em powerup
+    public boolean collidesWithPowerup(Rectangle obstacle){
+        return getCollisionAreaRacer().overlaps(obstacle);
+    }
     //Metod för att rita ut objekt.
     public void draw(SpriteBatch batch){
         sprite.draw(batch);

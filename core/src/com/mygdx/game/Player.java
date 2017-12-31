@@ -171,6 +171,87 @@ public class Player extends Racer{
         }
     }
 
+    public void acceleratePowerup(){
+        if(getSprite().getRotation() >= 0 && getSprite().getRotation() < 25){
+            setSpeedX(5);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 25 && getSprite().getRotation() < 65){
+            setSpeedX(5);
+            setSpeedY(5);
+        }
+        else if(getSprite().getRotation() >= 65 && getSprite().getRotation() < 115){
+            setSpeedX(0);
+            setSpeedY(5);
+        }
+        else if(getSprite().getRotation() >= 115 && getSprite().getRotation() < 155){
+            setSpeedX(-5);
+            setSpeedY(5);
+        }
+        else if(getSprite().getRotation() >= 155 && getSprite().getRotation() < 205){
+            setSpeedX(-5);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() >= 205 && getSprite().getRotation() < 245){
+            setSpeedX(-5);
+            setSpeedY(-5);
+        }
+        else if(getSprite().getRotation() >= 245 && getSprite().getRotation() < 295){
+            setSpeedX(0);
+            setSpeedY(-5);
+        }
+        else if(getSprite().getRotation() >= 295 && getSprite().getRotation() < 335){
+            setSpeedX(5);
+            setSpeedY(-5);
+        }
+        else if(getSprite().getRotation() == 360){
+            getSprite().setRotation(0);
+        }
+        else if(getSprite().getRotation() >= 335 && getSprite().getRotation() < 25){
+            setSpeedX(5);
+            setSpeedY(0);
+        }
+        if(getSprite().getRotation() <= 0 && getSprite().getRotation() > -25){
+            setSpeedX(5);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -25 && getSprite().getRotation() > -65){
+            setSpeedX(5);
+            setSpeedY(-5);
+        }
+        else if(getSprite().getRotation() <= -65 && getSprite().getRotation() > -115){
+            setSpeedX(0);
+            setSpeedY(-5);
+        }
+        else if(getSprite().getRotation() <= -115 && getSprite().getRotation() > -155){
+            setSpeedX(-5);
+            setSpeedY(-5);
+        }
+        else if(getSprite().getRotation() <= -155 && getSprite().getRotation() > -205){
+            setSpeedX(-5);
+            setSpeedY(0);
+        }
+        else if(getSprite().getRotation() <= -205 && getSprite().getRotation() > -245){
+            setSpeedX(-5);
+            setSpeedY(5);
+        }
+        else if(getSprite().getRotation() <= -245 && getSprite().getRotation() > -295){
+            setSpeedX(0);
+            setSpeedY(5);
+        }
+        else if(getSprite().getRotation() <= -295 && getSprite().getRotation() > -335){
+            setSpeedX(5);
+            setSpeedY(5);
+        }
+        else if(getSprite().getRotation() == -360){
+            getSprite().setRotation(0);
+        }
+        else if(getSprite().getRotation() <= -335 && getSprite().getRotation() > -25){
+            setSpeedX(5);
+            setSpeedY(0);
+        }
+    }
+
     //Metod som används när spelaren inte håller inne UP-tangenten.
     public void noAccelerate(){
         if(getSprite().getRotation() >= 0 && getSprite().getRotation() < 25){

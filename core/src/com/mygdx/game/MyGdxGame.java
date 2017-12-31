@@ -12,10 +12,12 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class MyGdxGame extends ApplicationAdapter {
 	private ArrayList<Racer> racerList = new ArrayList<>();
 	private ArrayList<Track> trackList = new ArrayList<>();
+	private ArrayList<Powerup> powerupList = new ArrayList<>();
 	private Racer[] racerArray = new Racer[1];
 	private Track[] levelOne = new Track[4];
 	private Track[] levelTwo = new Track[10];
@@ -37,6 +39,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	private Obstacle obstacle;
 	private int obstacleX, obstacleY;
 
+	private Powerup powerup;
+	private int powerupX, powerupY;
+	private Timer powerupTimer;
+
 	private BitmapFont font;
 	private String winner = "Winner: " , opponentText = "Opponent", playerText = "Player";
 
@@ -47,7 +53,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					levelThreePartFive, levelThreePartSix, levelThreePartSeven, levelThreePartEight,
 					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
-	private int testTwo = 0, test = 0, obstaclecount = 0;
+	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0;
 
 	@Override
 	public void create () {
@@ -63,6 +69,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		createLevelThree();
 		createOpponents();
 		createObstacle();
+		createPowerup();
 
 	}
 
@@ -161,15 +168,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		levelThreePartOne = levelThreeTrack.trackPartArea(45,45,1277,140);
 		levelThreePartTwo = levelThreeTrack.trackPartArea(1221,185,100,390);
 		levelThreePartThree = levelThreeTrack.trackPartArea(45,493,1178,80);
-		levelThreePartFour = levelThreeTrack.trackPartArea(45,403,60,92);
-		levelThreePartFive = levelThreeTrack.trackPartArea(45,354,862,50);
+		levelThreePartFour = levelThreeTrack.trackPartArea(45,453,60,42);
+		levelThreePartFive = levelThreeTrack.trackPartArea(45,354,862,100);
 		levelThreePartSix = levelThreeTrack.trackPartArea(906,354,90,121);
 		levelThreePartSeven = levelThreeTrack.trackPartArea(996,385,118,90);
 		levelThreePartEight = levelThreeTrack.trackPartArea(1111,204,90,271);
 		levelThreePartNine = levelThreeTrack.trackPartArea(996,204,118,90);
 		levelThreePartTen = levelThreeTrack.trackPartArea(906,204,90,121);
-		levelThreePartEleven = levelThreeTrack.trackPartArea(45,274,862,50);
-		levelThreePartTwelve = levelThreeTrack.trackPartArea(45,185,60,92);
+		levelThreePartEleven = levelThreeTrack.trackPartArea(45,224,862,100);
+		levelThreePartTwelve = levelThreeTrack.trackPartArea(45,185,60,42);
 
 		Track roadOne = new Track("Player.png", 45,45,1277,140);
 		levelThree[0] = roadOne;
@@ -180,10 +187,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		Track roadThree = new Track("Player.png", 45,493,1178,80);
 		levelThree[2] = roadThree;
 
-		Track roadFour = new Track("Player.png", 45,403,60,92);
+		Track roadFour = new Track("Player.png", 45,453,60,42);
 		levelThree[3] = roadFour;
 
-		Track roadFive = new Track("Player.png", 45,354,862,50);
+		Track roadFive = new Track("Player.png", 45,354,862,100);
 		levelThree[4] = roadFive;
 
 		Track roadSix = new Track("Player.png", 906,354,90,121);
@@ -201,10 +208,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		Track roadTen = new Track("Player.png", 906,204,90,121);
 		levelThree[9] = roadTen;
 
-		Track roadEleven = new Track("Player.png", 45,274,862,50);
+		Track roadEleven = new Track("Player.png", 45,224,862,100);
 		levelThree[10] = roadEleven;
 
-		Track roadTwelve = new Track("Player.png", 45,185,60,92);
+		Track roadTwelve = new Track("Player.png", 45,185,60,42);
 		levelThree[11] = roadTwelve;
 	}
 
@@ -214,6 +221,14 @@ public class MyGdxGame extends ApplicationAdapter {
 		obstacleX = rand.nextInt(1320);
 		obstacle = new Obstacle("Obstacle.png", obstacleX,obstacleY,50);
 	}
+	//Skapa powerup
+	public void createPowerup(){
+		powerupX = rand.nextInt(1320);
+		powerupY = rand.nextInt(618);
+		powerup = new Powerup("Powerup.png", powerupX, powerupY, 25);
+
+		powerupList.add(powerup);
+	}
 
 	//Metod som används för att rendera level ett.
 	public GameState renderLevelOne(){
@@ -222,8 +237,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerArray[0].updatePostion();
 
 
-			//Kollar vilka knappar som är intryckta
-			checkKeys();
+			//Kollar vilka knappar som är intryckta denna ligger nu i powerup metoden
+			//checkKeys();
 
 			//Kollar ifall spelaren kolliderar med en motståndare
 			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())) {
@@ -243,6 +258,22 @@ public class MyGdxGame extends ApplicationAdapter {
 				opponentOne.opponentNotCollideObstacle();
 			}
 
+
+			//Kollar ifall spelare och opponents plockar upp en powerup.
+			if (player.collidesWithPowerup(powerup.figureArea())){
+				powerupTime = 1;
+			}
+			if (powerupTime >= 1 && powerupTime < 1000){
+				powerupTime++;
+				checkKeysPowerup();
+			}
+			else{
+				checkKeys();
+			}
+
+			if (opponentOne.collidesWithPowerup(powerup.figureArea())){
+				opponentOne.opponentCollidePowerup();
+			}
 
 			//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
 			if (!player.insideTrack(partOne) && !player.insideTrack(partTwo) &&
@@ -285,6 +316,15 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//Ritar ut obstacle
 		obstacle.obstacleDrawLevelOne(obstacle, partOne, partTwo, partThree, partFour, batch);
+
+		//Ritar ut powerup
+		powerupCount = rand.nextInt(1000);
+		if(powerupCount == 99){
+			powerupDraw = 1;
+		}
+		if(powerupDraw == 1){
+			powerup.powerupDrawLevelOne(powerup, partOne, partTwo, partThree, partFour, batch);
+		}
 
 		//Ritar ut samtliga racer objekt.
 		racerList.get(0).draw(batch);
@@ -512,6 +552,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	}
 
+	public void checkKeysPowerup(){
+		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+			player.acceleratePowerup();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			player.brake();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			player.turnRight();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			player.turnLeft();
+		}
+
+	}
+
 	public GameState renderLevelThree(){
 		//Uppdaterar positionen av samtliga opponet objekt
 		for(Racer racer : racerList) {
@@ -539,6 +595,32 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(player.collidesWithRacer(opponentThree.getCollisionAreaRacer())){
 			player.setSpeedX(-(player.getSpeedX()+1));
 			player.setSpeedY(-(player.getSpeedY()+1));
+		}
+
+		//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
+		if (player.collidesWithObstacle(obstacle.figureArea())){
+			checkKeysOutOfBounds();
+		}
+		//Kollar ifall motståndarna kolliderar med hindret och sänker farten ifall det är sant!
+		if (opponentOne.collidesWithObstacle(obstacle.figureArea())){
+			opponentOne.opponentCollideObstacle();
+		}
+		else{
+			opponentOne.opponentNotCollideObstacle();
+		}
+
+		if (opponentTwo.collidesWithObstacle(obstacle.figureArea())){
+			opponentTwo.opponentCollideObstacle();
+		}
+		else{
+			opponentTwo.opponentNotCollideObstacle();
+		}
+
+		if (opponentThree.collidesWithObstacle(obstacle.figureArea())){
+			opponentThree.opponentCollideObstacle();
+		}
+		else{
+			opponentThree.opponentNotCollideObstacle();
 		}
 
 		//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
@@ -596,6 +678,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	//	levelThree[9].draw(batch);
 	//	levelThree[10].draw(batch);
 	//	levelThree[11].draw(batch);
+
+		//Ritar ut hindret
+		obstacle.obstacleDrawLevelThree(obstacle, levelThreePartOne, levelThreePartTwo, levelThreePartThree, levelThreePartFive,
+				levelThreePartSix, levelThreePartSeven, levelTwoPartEight, levelThreePartNine, levelThreePartTen, levelThreePartEleven, batch);
 
 		//Ritar ut samtliga racer objekt.
 		for(Racer player : racerList){

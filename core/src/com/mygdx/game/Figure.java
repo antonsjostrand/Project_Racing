@@ -53,6 +53,16 @@ public class Figure {
 
     }
 
+    public Rectangle figureRectanglePowerup(){
+        return new Rectangle(
+                getSprite().getX() + 12.5f,
+                getSprite().getY() + 12.5f,
+                getSprite().getWidth() - 24,
+                getSprite().getHeight() -24
+        );
+
+    }
+
     //Används vid kontroll av kollision med hinder.
     public Rectangle figureArea(){
         return new Rectangle(
@@ -63,14 +73,14 @@ public class Figure {
         );
     }
 
-    //Metod som kollar om man kan placera obstacle/powerup på en viss plats.
+    //Metod som kollar om man kan placera obstacle på en viss plats.
     public boolean figurePlacement(Rectangle rectangle){
         return figureRectangle().overlaps(rectangle);
     }
 
-
-
-
+    public boolean figurePlacementPowerup(Rectangle rectangle){
+        return figureRectanglePowerup().overlaps(rectangle);
+    }
 
     public void draw(SpriteBatch batch){
         sprite.draw(batch);
