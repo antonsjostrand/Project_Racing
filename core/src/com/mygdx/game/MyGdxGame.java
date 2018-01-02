@@ -24,8 +24,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	private SecureRandom rand = new SecureRandom();
 
 	private enum GameState{LEVELONE, LEVELTWO, LEVELTHREE, MAINMENU, LEVELCHANGE, FINISH};
-	private GameState gameState = GameState.LEVELONE;
-	private PlayState levelTransition;
+	private GameState gameState = GameState.MAINMENU;
+	private PlayState levelTransition, mainMenu, finishedState;
 
 	private SpriteBatch batch;
 	private Texture img;
@@ -55,6 +55,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0, powerupRemove = 0, powerupStop = 0;
 	private int levelChangeOne = 0, levelChangeTwo = 0;
+	private int mainMenuOne = 0, mainMenuTwo = 0;
+	private int exitGame = 0;
 
 	@Override
 	public void create () {
@@ -64,6 +66,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		createHUD();
 		createLevelChange();
+		createMainMenu();
+		createFinishedState();
 
 		createPlayer();
 		createLevelOne();
@@ -234,6 +238,14 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void createLevelChange(){
 		levelTransition = new PlayState("LevelChange.png", 0, 0, 1366,618);
 	}
+	//Skapar mainmenu gamestate
+	public void createMainMenu(){
+		mainMenu = new PlayState("MainMenu.png",0,0,1366,618);
+	}
+	//Skapar finished gamestate
+	public void createFinishedState(){
+		finishedState = new PlayState("FinishedState.png",0,0,1366,618);
+	}
 
 	//Metod som används för att rendera level change.
 	public GameState renderLevelChange(int levelChangeTwo){
@@ -256,6 +268,50 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 
 		return gameState;
+	}
+	//Metod som renderar huvudmenyn
+	public GameState renderMainMenu() {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.M)){
+			mainMenuOne++;
+		}
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.N)){
+			mainMenuTwo++;
+		}
+
+		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+		mainMenu.draw(batch);
+		batch.end();
+
+
+		if (mainMenuOne == 1){
+			//gameState = GameState.LEVELTWO;
+			//ska vara multiplayer
+		}
+		else if (mainMenuTwo == 1){
+			gameState = GameState.LEVELONE;
+		}
+
+		return gameState;
+	}
+
+	//Metod som renderar den så kallade finished screen.
+	public void renderFinishedState(){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			exitGame++;
+		}
+
+		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+		finishedState.draw(batch);
+		batch.end();
+
+
+		if (exitGame == 1){
+			System.exit(0);
+		}
 	}
 
 	//Metod som används för att rendera level ett.
@@ -369,7 +425,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		obstacle.obstacleDrawLevelOne(obstacle, partOne, partTwo, partThree, partFour, batch);
 
 		//Ritar ut powerup
-		powerupCount = rand.nextInt(1000);
+		powerupCount = rand.nextInt(100);
 		if(powerupCount == 99){
 			powerupDraw = 1;
 		}
@@ -421,6 +477,8 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerupCount = 0;
 			powerupDraw = 0;
 			powerupTime = 400;
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
 
 			test = 0;
 			testTwo = 0;
@@ -574,7 +632,7 @@ public class MyGdxGame extends ApplicationAdapter {
 									levelTwoPartSix, levelTwoPartSeven, levelTwoPartEight, batch);
 
 		//Ritar ut powerup
-		powerupCount = rand.nextInt(1000);
+		powerupCount = rand.nextInt(100);
 		if(powerupCount == 99){
 			powerupDraw = 1;
 		}
@@ -625,6 +683,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			powerupCount = 0;
 			powerupDraw = 0;
+			powerupTime = 400;
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
 
 			levelChangeTwo = 1;
 
@@ -759,7 +820,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		if (opponentThree.collidesWithPowerup(powerup.figureArea())){
 			opponentThree.opponentCollidePowerup();
 			powerupRemove = 1;
-			//powerupCount = rand.nextInt(1000);
 		}
 		if (powerupRemove >= 1 && powerupRemove <= 100){
 			powerupStop++;
@@ -878,7 +938,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//Ritar ut powerup
 		//Ritar ut powerup
-		powerupCount = rand.nextInt(1000);
+		powerupCount = rand.nextInt(100);
 		if(powerupCount == 99){
 			powerupDraw = 1;
 		}
@@ -938,7 +998,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void render () {
 
-		if (gameState == GameState.LEVELCHANGE){
+		if (gameState == GameState.MAINMENU){
+			gameState = renderMainMenu();
+		}
+		else if (gameState == GameState.LEVELCHANGE){
 			gameState = renderLevelChange(levelChangeTwo);
 		}
 		else if(gameState == GameState.LEVELONE){
@@ -949,6 +1012,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		else if(gameState == GameState.LEVELTHREE){
 			renderLevelThree();
+		}
+		else if (gameState == GameState.FINISH){
+			renderFinishedState();
 		}
 
 	}
