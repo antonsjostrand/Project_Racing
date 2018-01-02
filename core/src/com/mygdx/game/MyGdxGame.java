@@ -54,7 +54,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
 	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0, powerupRemove = 0, powerupStop = 0;
-	private int level = 0;
+	private int levelChangeOne = 0, levelChangeTwo = 0;
 
 	@Override
 	public void create () {
@@ -236,9 +236,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	//Metod som används för att rendera level change.
-	public GameState renderLevelChange(){
+	public GameState renderLevelChange(int levelChangeTwo){
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-			level++;
+			levelChangeOne++;
 		}
 
 		Gdx.gl.glClearColor(0, 1, 0, 1);
@@ -248,10 +248,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.end();
 
 
-		if (level == 1){
+		if (levelChangeOne == 1 && levelChangeTwo == 0){
 			gameState = GameState.LEVELTWO;
 		}
-		else if (level == 2){
+		else if (levelChangeOne == 2 && levelChangeTwo == 1){
 			gameState = GameState.LEVELTHREE;
 		}
 
@@ -420,6 +420,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			powerupCount = 0;
 			powerupDraw = 0;
+			powerupTime = 400;
 
 			test = 0;
 			testTwo = 0;
@@ -624,6 +625,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			powerupCount = 0;
 			powerupDraw = 0;
+
+			levelChangeTwo = 1;
 
 			test = 0;
 			testTwo = 0;
@@ -936,7 +939,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void render () {
 
 		if (gameState == GameState.LEVELCHANGE){
-			gameState = renderLevelChange();
+			gameState = renderLevelChange(levelChangeTwo);
 		}
 		else if(gameState == GameState.LEVELONE){
 			gameState = renderLevelOne();
