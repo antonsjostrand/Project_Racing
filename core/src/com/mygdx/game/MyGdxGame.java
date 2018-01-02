@@ -25,6 +25,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private enum GameState{LEVELONE, LEVELTWO, LEVELTHREE, MAINMENU, LEVELCHANGE, FINISH};
 	private GameState gameState = GameState.LEVELONE;
+	private PlayState levelTransition;
 
 	private SpriteBatch batch;
 	private Texture img;
@@ -53,6 +54,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
 	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0, powerupRemove = 0, powerupStop = 0;
+	private int level = 0;
 
 	@Override
 	public void create () {
@@ -61,6 +63,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		font.setColor(Color.BLACK);
 
 		createHUD();
+		createLevelChange();
 
 		createPlayer();
 		createLevelOne();
@@ -227,6 +230,33 @@ public class MyGdxGame extends ApplicationAdapter {
 		powerup = new Powerup("Powerup.png", powerupX, powerupY, 25);
 
 	}
+	//Skapar levelchange gamestate
+	public void createLevelChange(){
+		levelTransition = new PlayState("LevelChange.png", 0, 0, 1366,618);
+	}
+
+	//Metod som används för att rendera level change.
+	public GameState renderLevelChange(){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+			level++;
+		}
+
+		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+		levelTransition.draw(batch);
+		batch.end();
+
+
+		if (level == 1){
+			gameState = GameState.LEVELTWO;
+		}
+		else if (level == 2){
+			gameState = GameState.LEVELTHREE;
+		}
+
+		return gameState;
+	}
 
 	//Metod som används för att rendera level ett.
 	public GameState renderLevelOne(){
@@ -373,7 +403,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
 		if (test == 4 || testTwo == 4 ){
-			gameState = GameState.LEVELTWO;
+			gameState = GameState.LEVELCHANGE;
 
 			player.setX(605);
 			player.setY(155);
@@ -573,7 +603,7 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.end();
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
 		if (test == 8 || testTwo == 8 ){
-			gameState = GameState.LEVELTHREE;
+			gameState = GameState.LEVELCHANGE;
 
 			player.setX(605);
 			player.setY(155);
@@ -905,7 +935,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void render () {
 
-		if(gameState == GameState.LEVELONE){
+		if (gameState == GameState.LEVELCHANGE){
+			gameState = renderLevelChange();
+		}
+		else if(gameState == GameState.LEVELONE){
 			gameState = renderLevelOne();
 		}
 		else if(gameState == GameState.LEVELTWO){
