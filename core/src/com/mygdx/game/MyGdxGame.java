@@ -17,7 +17,6 @@ import java.util.Timer;
 public class MyGdxGame extends ApplicationAdapter {
 	private ArrayList<Racer> racerList = new ArrayList<>();
 	private ArrayList<Track> trackList = new ArrayList<>();
-	private ArrayList<Powerup> powerupList = new ArrayList<>();
 	private Racer[] racerArray = new Racer[1];
 	private Track[] levelOne = new Track[4];
 	private Track[] levelTwo = new Track[10];
@@ -53,7 +52,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					levelThreePartFive, levelThreePartSix, levelThreePartSeven, levelThreePartEight,
 					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
-	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0;
+	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0, powerupRemove = 0, powerupStop = 0;
 
 	@Override
 	public void create () {
@@ -227,7 +226,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		powerupY = rand.nextInt(618);
 		powerup = new Powerup("Powerup.png", powerupX, powerupY, 25);
 
-		powerupList.add(powerup);
 	}
 
 	//Metod som används för att rendera level ett.
@@ -237,16 +235,49 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerArray[0].updatePostion();
 
 
-			//Kollar vilka knappar som är intryckta denna ligger nu i powerup metoden
-			//checkKeys();
+		//Kollar ifall spelare och opponents plockar upp en powerup. checkKeys är metoden som styr bilen ifall man inte kolliderar med hinder/powerup
+		if (player.collidesWithPowerup(powerup.figureArea())){
+			powerupTime = 1;
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (powerupTime >= 1 && powerupTime < 300){
+			powerupTime++;
+			checkKeysPowerup();
+		}
+		else{
+			checkKeys();
+		}
 
-			//Kollar ifall spelaren kolliderar med en motståndare
-			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())) {
-				player.setSpeedX(-(player.getSpeedX() + 1));
-				player.setSpeedY(-(player.getSpeedY() + 1));
-			}
 
-			//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
+		if (opponentOne.collidesWithPowerup(powerup.figureArea())){
+			opponentOne.opponentCollidePowerup();
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+
+
+
+
+		//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
 			if (player.collidesWithObstacle(obstacle.figureArea())){
 				checkKeysOutOfBounds();
 			}
@@ -258,22 +289,12 @@ public class MyGdxGame extends ApplicationAdapter {
 				opponentOne.opponentNotCollideObstacle();
 			}
 
+		//Kollar ifall spelaren kolliderar med en motståndare
+		if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())) {
+			player.setSpeedX(-(player.getSpeedX() + 1));
+			player.setSpeedY(-(player.getSpeedY() + 1));
+		}
 
-			//Kollar ifall spelare och opponents plockar upp en powerup.
-			if (player.collidesWithPowerup(powerup.figureArea())){
-				powerupTime = 1;
-			}
-			if (powerupTime >= 1 && powerupTime < 1000){
-				powerupTime++;
-				checkKeysPowerup();
-			}
-			else{
-				checkKeys();
-			}
-
-			if (opponentOne.collidesWithPowerup(powerup.figureArea())){
-				opponentOne.opponentCollidePowerup();
-			}
 
 			//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
 			if (!player.insideTrack(partOne) && !player.insideTrack(partTwo) &&
@@ -367,6 +388,9 @@ public class MyGdxGame extends ApplicationAdapter {
 			obstacle.setX(obstacleX);
 			obstacle.setY(obstacleY);
 
+			powerupCount = 0;
+			powerupDraw = 0;
+
 			test = 0;
 			testTwo = 0;
 
@@ -381,24 +405,66 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerList.get(1).updatePostion();
 		racerArray[0].updatePostion();
 
-			//Kollar vilka knappar som är intryckta
-			checkKeys();
 
-			//Kollar ifall spelaren kolliderar med en motståndare
-			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
-				player.setSpeedX(-(player.getSpeedX()+1));
-				player.setSpeedY(-(player.getSpeedY()+1));
-			}
-			if(player.collidesWithRacer(opponentTwo.getCollisionAreaRacer())){
-				player.setSpeedX(-(player.getSpeedX()+1));
-				player.setSpeedY(-(player.getSpeedY()+1));
-			}
+		//Kollar ifall spelare och opponents plockar upp en powerup. checkKeys är metoden som styr bilen ifall man inte kolliderar med hinder/powerup
+		if (player.collidesWithPowerup(powerup.figureArea())){
+			powerupTime = 1;
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (powerupTime >= 1 && powerupTime < 300){
+			powerupTime++;
+			checkKeysPowerup();
+		}
+		else{
+			checkKeys();
+		}
+
+
+		if (opponentOne.collidesWithPowerup(powerup.figureArea())){
+			opponentOne.opponentCollidePowerup();
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (opponentTwo.collidesWithPowerup(powerup.figureArea())){
+			opponentTwo.opponentCollidePowerup();
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+
 
 		//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
 		if (player.collidesWithObstacle(obstacle.figureArea())){
 			checkKeysOutOfBounds();
 		}
-		//Kollar ifall motståndarna kolliderar med hindret och sänker farten ifall det är sant!
+
 		if (opponentOne.collidesWithObstacle(obstacle.figureArea())){
 			opponentOne.opponentCollideObstacle();
 		}
@@ -412,6 +478,19 @@ public class MyGdxGame extends ApplicationAdapter {
 		else{
 			opponentTwo.opponentNotCollideObstacle();
 		}
+
+
+
+			//Kollar ifall spelaren kolliderar med en motståndare
+			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
+				player.setSpeedX(-(player.getSpeedX()+1));
+				player.setSpeedY(-(player.getSpeedY()+1));
+			}
+			if(player.collidesWithRacer(opponentTwo.getCollisionAreaRacer())){
+				player.setSpeedX(-(player.getSpeedX()+1));
+				player.setSpeedY(-(player.getSpeedY()+1));
+			}
+
 
 			//Kollar ifall spelaren är på banan eller utanför.
 			if(!player.insideTrack(levelTwoPartOne) && !player.insideTrack(levelTwoPartTwo) &&
@@ -463,6 +542,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		obstacle.obstacleDrawLevelTwo(obstacle, levelTwoPartOne, levelTwoPartTwo, levelTwoPartThree, levelTwoPartFour, levelTwoPartFive,
 									levelTwoPartSix, levelTwoPartSeven, levelTwoPartEight, batch);
 
+		//Ritar ut powerup
+		powerupCount = rand.nextInt(1000);
+		if(powerupCount == 99){
+			powerupDraw = 1;
+		}
+		if(powerupDraw == 1){
+			powerup.powerupDrawLevelTwo(powerup, levelTwoPartOne, levelTwoPartTwo, levelTwoPartThree, levelTwoPartFour, levelTwoPartFive,
+					levelTwoPartSix, levelTwoPartSeven, levelTwoPartEight, batch);
+		}
 
 		//Ritar ut samtliga racing objekt
 		racerList.get(0).draw(batch);
@@ -504,7 +592,8 @@ public class MyGdxGame extends ApplicationAdapter {
 			obstacle.setX(obstacleX);
 			obstacle.setY(obstacleY);
 
-
+			powerupCount = 0;
+			powerupDraw = 0;
 
 			test = 0;
 			testTwo = 0;
@@ -543,6 +632,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 			player.brake();
 		}
+		else if(!Gdx.input.isKeyPressed(Input.Keys.UP)){
+			player.noAccelerate();
+		}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			player.turnRightOutOfBounds();
 		}
@@ -558,6 +650,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
 			player.brake();
+		}
+		else if(!Gdx.input.isKeyPressed(Input.Keys.UP)){
+			player.noAccelerate();
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			player.turnRight();
@@ -576,32 +671,78 @@ public class MyGdxGame extends ApplicationAdapter {
 			//Uppdaterar spelarens position
 			racerArray[0].updatePostion();
 
-			//Kollar vilka knappar som är intryckta
+		//Kollar ifall spelare och opponents plockar upp en powerup. checkKeys är metoden som styr bilen ifall man inte kolliderar med hinder/powerup
+		if (player.collidesWithPowerup(powerup.figureArea())){
+			powerupTime = 1;
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (powerupTime >= 1 && powerupTime < 300){
+			powerupTime++;
+			checkKeysPowerup();
+		}
+		else{
 			checkKeys();
-
-			//Kollar ifall spelaren kolliderar med en motståndare
-			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
-				//player.setX(opponentOne.getX()-50);
-				//player.setY(opponentOne.getY());
-
-				player.setSpeedX(-(player.getSpeedX()+1));
-				player.setSpeedY(-(player.getSpeedY()+1));
-			}
-		if(player.collidesWithRacer(opponentTwo.getCollisionAreaRacer())){
-			player.setSpeedX(-(player.getSpeedX()+1));
-			player.setSpeedY(-(player.getSpeedY()+1));
 		}
 
-		if(player.collidesWithRacer(opponentThree.getCollisionAreaRacer())){
-			player.setSpeedX(-(player.getSpeedX()+1));
-			player.setSpeedY(-(player.getSpeedY()+1));
+
+		if (opponentOne.collidesWithPowerup(powerup.figureArea())){
+			opponentOne.opponentCollidePowerup();
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (opponentTwo.collidesWithPowerup(powerup.figureArea())){
+			opponentTwo.opponentCollidePowerup();
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (opponentThree.collidesWithPowerup(powerup.figureArea())){
+			opponentThree.opponentCollidePowerup();
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
 		}
 
 		//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
 		if (player.collidesWithObstacle(obstacle.figureArea())){
 			checkKeysOutOfBounds();
 		}
-		//Kollar ifall motståndarna kolliderar med hindret och sänker farten ifall det är sant!
+
 		if (opponentOne.collidesWithObstacle(obstacle.figureArea())){
 			opponentOne.opponentCollideObstacle();
 		}
@@ -622,6 +763,25 @@ public class MyGdxGame extends ApplicationAdapter {
 		else{
 			opponentThree.opponentNotCollideObstacle();
 		}
+
+
+			//Kollar ifall spelaren kolliderar med en motståndare
+			if (player.collidesWithRacer(opponentOne.getCollisionAreaRacer())){
+				player.setSpeedX(-(player.getSpeedX()+1));
+				player.setSpeedY(-(player.getSpeedY()+1));
+			}
+
+			if(player.collidesWithRacer(opponentTwo.getCollisionAreaRacer())){
+			player.setSpeedX(-(player.getSpeedX()+1));
+			player.setSpeedY(-(player.getSpeedY()+1));
+			}
+
+			if(player.collidesWithRacer(opponentThree.getCollisionAreaRacer())){
+			player.setSpeedX(-(player.getSpeedX()+1));
+			player.setSpeedY(-(player.getSpeedY()+1));
+			}
+
+
 
 		//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
 			if(!player.insideTrack(levelThreePartOne) && !player.insideTrack(levelThreePartTwo) &&
@@ -682,6 +842,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Ritar ut hindret
 		obstacle.obstacleDrawLevelThree(obstacle, levelThreePartOne, levelThreePartTwo, levelThreePartThree, levelThreePartFive,
 				levelThreePartSix, levelThreePartSeven, levelTwoPartEight, levelThreePartNine, levelThreePartTen, levelThreePartEleven, batch);
+
+		//Ritar ut powerup
+		//Ritar ut powerup
+		powerupCount = rand.nextInt(1000);
+		if(powerupCount == 99){
+			powerupDraw = 1;
+		}
+		if(powerupDraw == 1){
+			powerup.powerupDrawLevelThree(powerup, levelThreePartOne, levelThreePartTwo, levelThreePartThree, levelThreePartFive,
+					levelThreePartSix, levelThreePartSeven, levelTwoPartEight, levelThreePartNine, levelThreePartTen, levelThreePartEleven, batch);
+		}
+
 
 		//Ritar ut samtliga racer objekt.
 		for(Racer player : racerList){
