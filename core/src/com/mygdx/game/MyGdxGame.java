@@ -51,11 +51,13 @@ public class MyGdxGame extends ApplicationAdapter {
 					levelThreePartFive, levelThreePartSix, levelThreePartSeven, levelThreePartEight,
 					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
+
 	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0, powerupRemove = 0, powerupStop = 0;
 	private int powerupTimeTwo = 0, powerupRemoveTwo = 0, powerupStopTwo = 0;
 	private int levelChangeOne = 0, levelChangeTwo = 0, levelChangeMultiplayer = 0;
 	private int mainMenuOne = 0, mainMenuTwo = 0;
 	private int exitGame = 0;
+	private int lapCheck = 0, lapCheckPlayerTwo = 0, lapCheckOpponentOne = 0, lapCheckOpponentTwo = 0, lapCheckOpponentThree = 0;
 
 	@Override
 	public void create () {
@@ -248,6 +250,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		finishedState = new PlayState("FinishedState.png",0,0,1366,618);
 	}
 
+	//Återställer varven
+	public int resetLaps(int reset){
+		return reset = 0;
+	}
+
 	//Metod som används för att rendera level change.
 	public GameState renderLevelChange(int levelChangeTwo){
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
@@ -418,15 +425,13 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			}
 
-
+		//Kollar så att spelaren/motståndare inte fuskar.
+		lapCheck = player.antiCheatingLevelOne(player);
+		lapCheckOpponentOne = opponentOne.antiCheatingLevelOne(opponentOne);
 
 		//Ändrar riktningen och åt vilket håll motståndaren kör
 		opponentOne.changeDirectionLevelOne();
 		opponentOne.followTrackLevelOne();
-
-		//Ökar variablerna när spelaren/motståndaren kört ett varv.
-		int test = opponentOne.checkLaps(opponentOne);
-		int testTwo = player.checkLaps(player);
 
 		Gdx.gl.glClearColor(0, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -460,28 +465,24 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerList.get(0).draw(batch);
 		racerArray[0].draw(batch);
 
-
-
-
-
 		//Ritar ut vinnarens namn.
 		font.draw(batch, winner,700,600);
-		if (testTwo == 4){
+		if (lapCheck == 3){
 			font.draw(batch, playerText, 752,600);
 		}
-		if(test == 4){
+		if(lapCheckOpponentOne == 3){
 			font.draw(batch, opponentText,752,600);
 		}
 
 		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(testTwo),100,600);
-		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(lapCheck),100,600);
+		font.draw(batch, String.valueOf(lapCheckOpponentOne), 100,700);
 		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
 		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (test == 4 || testTwo == 4 ){
+		if (lapCheck == 3 || lapCheckOpponentOne == 3 ){
 			gameState = GameState.LEVELCHANGE;
 
 			player.setX(605);
@@ -502,9 +503,6 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerupTime = 400;
 			powerup.setX(rand.nextInt(1321));
 			powerup.setY(rand.nextInt(618));
-
-			test = 0;
-			testTwo = 0;
 
 		}
 		return gameState;
@@ -620,15 +618,18 @@ public class MyGdxGame extends ApplicationAdapter {
 			}
 
 
+		//Kollar så att spelaren/motståndare inte fuskar.
+		lapCheck = player.antiCheatingLevelTwo(player);
+		lapCheckOpponentOne = opponentOne.antiCheatingLevelTwo(opponentOne);
+		lapCheckOpponentTwo = opponentTwo.antiCheatingLevelTwo(opponentTwo);
+
+
 		//Kallar på metoderna som flyttar motståndare ett
 		opponentOne.followTrackLevelTwo();
 		opponentOne.changeDirectionLevelTwo();
 		opponentTwo.followTrackLevelTwo();
 		opponentTwo.changeDirectionLevelTwo();
 
-		//Ökar variablerna när man kört ett varv.
-		int test = opponentOne.checkLaps(opponentOne);
-		int testTwo = player.checkLaps(player);
 
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -671,20 +672,20 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//Ritar ut vinnarens namn
 		font.draw(batch, winner,700,600);
-		if (testTwo == 4){
+		if (lapCheck == 5){
 			font.draw(batch, playerText, 752,600);
 		}
-		if(test == 4){
+		if(lapCheckOpponentOne == 5){
 			font.draw(batch, opponentText,752,600);
 		}
 
 		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(testTwo),100,600);
-		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(lapCheck),100,600);
+		font.draw(batch, String.valueOf(lapCheckOpponentOne), 100,700);
 
         batch.end();
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (test == 8 || testTwo == 8 ){
+		if (lapCheck == 5 || lapCheckOpponentOne == 5 ){
 			gameState = GameState.LEVELCHANGE;
 
 			player.setX(605);
@@ -711,9 +712,6 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerup.setY(rand.nextInt(618));
 
 			levelChangeTwo = 1;
-
-			test = 0;
-			testTwo = 0;
 
 		}
 		return gameState;
@@ -970,6 +968,12 @@ public class MyGdxGame extends ApplicationAdapter {
 
 			}
 
+		//Kollar så att spelaren/motståndare inte fuskar.
+		lapCheck = player.antiCheatingLevelThree(player);
+		lapCheckOpponentOne = opponentOne.antiCheatingLevelThree(opponentOne);
+		lapCheckOpponentTwo = opponentTwo.antiCheatingLevelThree(opponentTwo);
+		lapCheckOpponentThree = opponentThree.antiCheatingLevelThree(opponentThree);
+
 		//Ändrar riktningen och åt vilket håll motståndaren kör
 		opponentOne.followTrackLevelThree();
 		opponentOne.changeDirectionLevelThree();
@@ -977,12 +981,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		opponentTwo.changeDirectionLevelThree();
 		opponentThree.followTrackLevelThree();
 		opponentThree.changeDirectionLevelThree();
-
-
-
-		//Ökar variablerna när spelaren/motståndaren kört ett varv.
-		int test = opponentOne.checkLaps(opponentOne);
-		int testTwo = player.checkLaps(player);
 
 		Gdx.gl.glClearColor(0, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -1034,16 +1032,16 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//Ritar ut vinnarens namn.
 		font.draw(batch, winner,700,600);
-		if (testTwo == 12){
+		if (lapCheck == 7){
 			font.draw(batch, playerText, 752,600);
 		}
-		if(test == 12){
+		if(lapCheckOpponentOne == 7){
 			font.draw(batch, opponentText,752,600);
 		}
 
 		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(testTwo),100,600);
-		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(lapCheck),100,600);
+		font.draw(batch, String.valueOf(lapCheckOpponentOne), 100,700);
 
 		//TEST COLLISION
 		font.draw(batch, String.valueOf(opponentThree.getX()),100,650);
@@ -1051,7 +1049,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (test == 12 || testTwo == 12 ){
+		if (lapCheck == 7 || lapCheckOpponentOne == 7){
 			gameState = GameState.FINISH;
 
 			player.setX(605);
@@ -1061,9 +1059,6 @@ public class MyGdxGame extends ApplicationAdapter {
 			opponentOne.setX(605);
 			opponentOne.setY(100);
 			opponentOne.getSprite().setRotation(0);
-
-			test = 0;
-			testTwo = 0;
 
 		}
 		return gameState;
@@ -1156,8 +1151,10 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		}
 
-		//Ökar variablerna när spelaren/motståndaren kört ett varv.
-		int testTwo = player.checkLaps(player);
+		//Kollar så att ingen av spelarna fuskar
+		lapCheck = player.antiCheatingLevelOne(player);
+		lapCheckPlayerTwo = playerTwo.antiCheatingLevelOne(playerTwo);
+
 
 		Gdx.gl.glClearColor(0, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -1193,22 +1190,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//Ritar ut vinnarens namn.
 		font.draw(batch, winner,700,600);
-		if (testTwo == 4){
+		if (lapCheck == 3){
 			font.draw(batch, playerText, 752,600);
 		}
-		if(test == 4){
+		if(lapCheckPlayerTwo == 3){
 			font.draw(batch, opponentText,752,600);
 		}
 
 		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(testTwo),100,600);
-		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(lapCheck),100,600);
+		font.draw(batch, String.valueOf(lapCheckPlayerTwo), 100,700);
 		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
 		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (test == 4 || testTwo == 4 ){
+		if (lapCheck == 3 || lapCheckPlayerTwo == 3 ){
 			gameState = GameState.LEVEL_CHANGE_MULTIPLAYER;
 
 			player.setX(605);
@@ -1226,9 +1223,6 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerupTimeTwo = 400;
 			powerup.setX(rand.nextInt(1321));
 			powerup.setY(rand.nextInt(618));
-
-			test = 0;
-			testTwo = 0;
 
 		}
 		return gameState;
@@ -1325,8 +1319,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		}
 
-		//Ökar variablerna när spelaren/motståndaren kört ett varv.
-		int testTwo = player.checkLaps(player);
+		//Kollar så att ingen av spelarna fuskar
+		lapCheck = player.antiCheatingLevelTwo(player);
+		lapCheckPlayerTwo = playerTwo.antiCheatingLevelTwo(playerTwo);
 
 		Gdx.gl.glClearColor(0, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -1364,22 +1359,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//Ritar ut vinnarens namn.
 		font.draw(batch, winner,700,600);
-		if (testTwo == 4){
+		if (lapCheck == 5){
 			font.draw(batch, playerText, 752,600);
 		}
-		if(test == 4){
+		if(lapCheckPlayerTwo == 5){
 			font.draw(batch, opponentText,752,600);
 		}
 
 		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(testTwo),100,600);
-		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(lapCheck),100,600);
+		font.draw(batch, String.valueOf(lapCheckPlayerTwo), 100,700);
 		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
 		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (test == 8 || testTwo == 8 ){
+		if (lapCheck == 5 || lapCheckPlayerTwo == 5){
 			gameState = GameState.LEVEL_CHANGE_MULTIPLAYER;
 
 			player.setX(605);
@@ -1506,8 +1501,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		}
 
-		//Ökar variablerna när spelaren/motståndaren kört ett varv.
-		int testTwo = player.checkLaps(player);
+		//Kollar så att ingen av spelarna fuskar
+		lapCheck = player.antiCheatingLevelThree(player);
+		lapCheckPlayerTwo = playerTwo.antiCheatingLevelThree(playerTwo);
 
 		Gdx.gl.glClearColor(0, 1, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -1545,22 +1541,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		//Ritar ut vinnarens namn.
 		font.draw(batch, winner,700,600);
-		if (testTwo == 4){
+		if (lapCheck == 7){
 			font.draw(batch, playerText, 752,600);
 		}
-		if(test == 4){
+		if(lapCheckPlayerTwo == 7){
 			font.draw(batch, opponentText,752,600);
 		}
 
 		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(testTwo),100,600);
-		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(lapCheck),100,600);
+		font.draw(batch, String.valueOf(lapCheckPlayerTwo), 100,700);
 		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
 		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (test == 12 || testTwo == 12 ){
+		if (lapCheck == 7 || lapCheckPlayerTwo == 7){
 			gameState = GameState.FINISH;
 
 			player.setX(605);

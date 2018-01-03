@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Rectangle;
 public class Racer {
     private Sprite sprite;
     private float speedX = 0, speedY = 0;
-    private int laps = 0;
+    private int laps = 0, antiCheatLaps = 0, antiCheatCount = 0;
+    private int antiCheatLapsLevelTwo = 0, antiCheatCountLevelTwo = 0;
+    private int antiCheatLapsLevelThree = 0, antiCheatCountLevelThree = 0;
     private final float SHRINK_COLLISION_RADIUS_HEIGHT, SHRINK_COLLISION_RADIUS_WIDTH;
 
 
@@ -62,6 +64,78 @@ public class Racer {
         setX(getX() + getSpeedX());
         setY(getY() + getSpeedY());
     }
+
+
+
+    public int antiCheatingLevelOne(Racer racer) {
+        if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
+            antiCheatCount++;
+        }
+        if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 0) {
+            antiCheatLaps = 1;
+            antiCheatCount = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 1) {
+            antiCheatLaps = 2;
+            antiCheatCount = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 2) {
+            antiCheatLaps = 3;
+            antiCheatCount = 0;
+        }
+        return antiCheatLaps;
+    }
+
+    public int antiCheatingLevelTwo(Racer racer) {
+        if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
+            antiCheatCountLevelTwo++;
+        }
+        if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 0) {
+            antiCheatLapsLevelTwo = 1;
+            antiCheatCountLevelTwo = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 1) {
+            antiCheatLapsLevelTwo = 2;
+            antiCheatCountLevelTwo = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 2) {
+            antiCheatLapsLevelTwo = 3;
+            antiCheatCountLevelTwo = 0;
+        }else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 3) {
+            antiCheatLapsLevelTwo = 4;
+            antiCheatCountLevelTwo = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 4) {
+            antiCheatLapsLevelTwo = 5;
+            antiCheatCountLevelTwo = 0;
+        }
+        return antiCheatLapsLevelTwo;
+    }
+
+    public int antiCheatingLevelThree(Racer racer) {
+        if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
+            antiCheatCountLevelThree++;
+        }
+        if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 0) {
+            antiCheatLapsLevelThree = 1;
+            antiCheatCountLevelThree = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 1) {
+            antiCheatLapsLevelThree = 2;
+            antiCheatCountLevelThree = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 2) {
+            antiCheatLapsLevelThree = 3;
+            antiCheatCountLevelThree = 0;
+        }else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 3) {
+            antiCheatLapsLevelThree = 4;
+            antiCheatCountLevelThree = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 4) {
+            antiCheatLapsLevelThree = 5;
+            antiCheatCountLevelThree = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 5) {
+            antiCheatLapsLevelThree = 6;
+            antiCheatCountLevelThree = 0;
+        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 6) {
+            antiCheatLapsLevelThree = 7;
+            antiCheatCountLevelThree = 0;
+        }
+        return antiCheatLapsLevelThree;
+    }
+
     //Metod för att stänga av spelet när någon kört 3 varv.
     public int checkLaps(Racer racer){
         float x = racer.getX();
@@ -145,6 +219,7 @@ public class Racer {
         );
     }
 
+
     //Metod som tar en rektangel som parameter och sedan kollar ifall en racer kolliderar med en annan.
     public boolean collidesWithRacer(Rectangle rectangle){
         return getCollisionAreaRacer().overlaps(rectangle);
@@ -154,6 +229,7 @@ public class Racer {
     public boolean insideTrack(Rectangle rectangle) {
         return getCollisionArea().overlaps(rectangle);
     }
+
     //Metod som kollar ifall man kolliderar med ett hinder
     public boolean collidesWithObstacle(Rectangle obstacle){
         return getCollisionAreaRacer().overlaps(obstacle);
