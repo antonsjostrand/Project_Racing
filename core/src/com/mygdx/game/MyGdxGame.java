@@ -17,21 +17,20 @@ import java.util.Timer;
 public class MyGdxGame extends ApplicationAdapter {
 	private ArrayList<Racer> racerList = new ArrayList<>();
 	private ArrayList<Track> trackList = new ArrayList<>();
-	private Racer[] racerArray = new Racer[1];
+	private Racer[] racerArray = new Racer[2];
 	private Track[] levelOne = new Track[4];
 	private Track[] levelTwo = new Track[10];
 	private Track[] levelThree = new Track[12];
 	private SecureRandom rand = new SecureRandom();
 
-	private enum GameState{LEVELONE, LEVELTWO, LEVELTHREE, MAINMENU, LEVELCHANGE, FINISH};
+	private enum GameState{LEVELONE, LEVELTWO, LEVELTHREE, LEVEL_ONE_MULTIPLAYER, LEVEL_TWO_MULTIPLAYER,
+							LEVEL_THREE_MULTIPLAYER, MAINMENU, LEVELCHANGE, LEVEL_CHANGE_MULTIPLAYER, FINISH};
 	private GameState gameState = GameState.MAINMENU;
 	private PlayState levelTransition, mainMenu, finishedState;
 
 	private SpriteBatch batch;
-	private Texture img;
 
-
-	private Player player;
+	private Player player, playerTwo;
 	private Opponent opponentOne;
 	private OpponentTwo opponentTwo;
 	private OpponentThree opponentThree;
@@ -41,7 +40,6 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private Powerup powerup;
 	private int powerupX, powerupY;
-	private Timer powerupTimer;
 
 	private BitmapFont font;
 	private String winner = "Winner: " , opponentText = "Opponent", playerText = "Player";
@@ -54,7 +52,8 @@ public class MyGdxGame extends ApplicationAdapter {
 					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
 	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0, powerupRemove = 0, powerupStop = 0;
-	private int levelChangeOne = 0, levelChangeTwo = 0;
+	private int powerupTimeTwo = 0, powerupRemoveTwo = 0, powerupStopTwo = 0;
+	private int levelChangeOne = 0, levelChangeTwo = 0, levelChangeMultiplayer = 0;
 	private int mainMenuOne = 0, mainMenuTwo = 0;
 	private int exitGame = 0;
 
@@ -92,11 +91,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerList.add(opponentThree);
 	}
 
-	//Metod för att skapa spelaren
+	//Metod för att skapa spelare ett och spelare två
 	public void createPlayer(){
 		player = new Player("Player.png", 605,150,35,17.5f);
-		//racerList.add(player);
 		racerArray[0] = player;
+
+		playerTwo = new Player("Player.png", 605, 100,35,17.5f);
+		racerArray[1] = playerTwo;
 	}
 	//Metod för att skapa HUD:en
 	public void createHUD(){
@@ -269,6 +270,29 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		return gameState;
 	}
+
+	//Metod som renderar level change i multiplayer mode
+	public GameState renderLevelChangeMultiPlayer(int levelChangeMultiplayer){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+			levelChangeOne++;
+		}
+
+		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+		levelTransition.draw(batch);
+		batch.end();
+
+
+		if (levelChangeOne == 1 && levelChangeMultiplayer == 0){
+			gameState = GameState.LEVEL_TWO_MULTIPLAYER;
+		}
+		else if (levelChangeOne == 2 && levelChangeMultiplayer == 1){
+			gameState = GameState.LEVEL_THREE_MULTIPLAYER;
+		}
+
+		return gameState;
+	}
 	//Metod som renderar huvudmenyn
 	public GameState renderMainMenu() {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.M)){
@@ -286,8 +310,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 
 		if (mainMenuOne == 1){
-			//gameState = GameState.LEVELTWO;
-			//ska vara multiplayer
+			gameState = GameState.LEVEL_ONE_MULTIPLAYER;
 		}
 		else if (mainMenuTwo == 1){
 			gameState = GameState.LEVELONE;
@@ -336,7 +359,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerupRemove = 0;
 			powerupStop = 0;
 		}
-		if (powerupTime >= 1 && powerupTime < 300){
+		if (powerupTime >= 1 && powerupTime < 90){
 			powerupTime++;
 			checkKeysPowerup();
 		}
@@ -510,7 +533,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerupRemove = 0;
 			powerupStop = 0;
 		}
-		if (powerupTime >= 1 && powerupTime < 300){
+		if (powerupTime >= 1 && powerupTime < 90){
 			powerupTime++;
 			checkKeysPowerup();
 		}
@@ -714,8 +737,25 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.turnLeft();
 		}
+	}
 
-
+	//Metod som kontrollerar om spelare två trycker på några tangenter.
+	public void checkKeysMultiPlayer(){
+		if(Gdx.input.isKeyPressed(Input.Keys.W)){
+			playerTwo.accelerate();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+			playerTwo.brake();
+		}
+		else if(!Gdx.input.isKeyPressed(Input.Keys.W)){
+			playerTwo.noAccelerate();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			playerTwo.turnRight();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+			playerTwo.turnLeft();
+		}
 	}
 
 	//Metod som kontrollerar om spelaren trycker på några tangenterna när han är utanför banan.
@@ -735,9 +775,27 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.turnLeftOutOfBounds();
 		}
-
 	}
 
+	//Metod som kontrollerar om spelare två trycker på några tangenterna när han är utanför banan.
+	public void checkKeysOutOfBoundsMultiPlayer(){
+		if(Gdx.input.isKeyPressed(Input.Keys.W)){
+			playerTwo.accelerateOutOfBounds();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+			playerTwo.brake();
+		}
+		else if(!Gdx.input.isKeyPressed(Input.Keys.W)){
+			playerTwo.noAccelerate();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			playerTwo.turnRightOutOfBounds();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+			playerTwo.turnLeftOutOfBounds();
+		}
+	}
+	//Styr spelaren när man kört över en powerup
 	public void checkKeysPowerup(){
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)){
 			player.acceleratePowerup();
@@ -754,9 +812,27 @@ public class MyGdxGame extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			player.turnLeft();
 		}
-
+	}
+	//Styr spelare två när man kört över en powerup
+	public void checkKeysPowerupMultiPlayer(){
+		if(Gdx.input.isKeyPressed(Input.Keys.W)){
+			playerTwo.acceleratePowerup();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+			playerTwo.brake();
+		}
+		else if(!Gdx.input.isKeyPressed(Input.Keys.W)){
+			playerTwo.noAccelerate();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+			playerTwo.turnRight();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+			playerTwo.turnLeft();
+		}
 	}
 
+	//Metod som används för att rendera level tre
 	public GameState renderLevelThree(){
 		//Uppdaterar positionen av samtliga opponet objekt
 		for(Racer racer : racerList) {
@@ -780,7 +856,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerupRemove = 0;
 			powerupStop = 0;
 		}
-		if (powerupTime >= 1 && powerupTime < 300){
+		if (powerupTime >= 1 && powerupTime < 90){
 			powerupTime++;
 			checkKeysPowerup();
 		}
@@ -986,10 +1062,531 @@ public class MyGdxGame extends ApplicationAdapter {
 			opponentOne.setY(100);
 			opponentOne.getSprite().setRotation(0);
 
+			test = 0;
+			testTwo = 0;
 
+		}
+		return gameState;
+	}
+
+	//Metod som används för att rendera level ett när man spelar flera spelare.
+	public GameState renderLevelOneMultiPlayer(){
+		//Uppdaterar positionen av samtliga Racer objekt
+		racerArray[0].updatePostion();
+		racerArray[1].updatePostion();
+
+
+		//Kollar ifall spelare och opponents plockar upp en powerup. checkKeys är metoden som styr bilen ifall man inte kolliderar med hinder/powerup
+		if (player.collidesWithPowerup(powerup.figureArea())){
+			powerupTime = 1;
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (powerupTime >= 1 && powerupTime < 90){
+			powerupTime++;
+			checkKeysPowerup();
+		}
+		else{
+			checkKeys();
+		}
+
+		if (playerTwo.collidesWithPowerup(powerup.figureArea())){
+			powerupTimeTwo = 1;
+			powerupRemoveTwo = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemoveTwo >= 1 && powerupRemoveTwo <= 100){
+			powerupStopTwo++;
+		}
+		if (powerupStopTwo == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemoveTwo = 0;
+			powerupStopTwo = 0;
+		}
+		if (powerupTimeTwo >= 1 && powerupTimeTwo < 90){
+			powerupTimeTwo++;
+			checkKeysPowerupMultiPlayer();
+		}
+		else{
+			checkKeysMultiPlayer();
+		}
+
+
+		//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
+		if (player.collidesWithObstacle(obstacle.figureArea())){
+			checkKeysOutOfBounds();
+		}
+
+		if (playerTwo.collidesWithObstacle(obstacle.figureArea())){
+			checkKeysOutOfBoundsMultiPlayer();
+		}
+
+		//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
+		if (!player.insideTrack(partOne) && !player.insideTrack(partTwo) &&
+				!player.insideTrack(partThree) && !player.insideTrack(partFour)) {
+
+			if (player.getX() > 1336 || player.getX() < 30 || player.getY() > 588 || player.getY() < 30) {
+				player.bounceOfEdge();
+			} else {
+				checkKeysOutOfBounds();
+			}
+			player.setSpeedOutOfBounds();
+
+		}
+
+		if (!playerTwo.insideTrack(partOne) && !playerTwo.insideTrack(partTwo) &&
+				!playerTwo.insideTrack(partThree) && !playerTwo.insideTrack(partFour)) {
+
+			if (playerTwo.getX() > 1336 || playerTwo.getX() < 30 || playerTwo.getY() > 588 || playerTwo.getY() < 30) {
+				playerTwo.bounceOfEdge();
+			} else {
+				checkKeysOutOfBoundsMultiPlayer();
+			}
+			playerTwo.setSpeedOutOfBounds();
+
+		}
+
+		//Ökar variablerna när spelaren/motståndaren kört ett varv.
+		int testTwo = player.checkLaps(player);
+
+		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+
+		//Ritar ut level ett.
+		trackList.get(0).draw(batch);
+
+		//Ritar ut HUD:en (RÖDA FÄLTET)
+		levelTwo[9].draw(batch);
+
+		//Kontrollerar så att arean av delarna stämmer.
+		//levelOne[0].draw(batch);
+		//levelOne[1].draw(batch);
+		//levelOne[2].draw(batch);
+		//levelOne[3].draw(batch);
+
+		//Ritar ut obstacle
+		obstacle.obstacleDrawLevelOne(obstacle, partOne, partTwo, partThree, partFour, batch);
+
+		//Ritar ut powerup
+		powerupCount = rand.nextInt(100);
+		if(powerupCount == 99){
+			powerupDraw = 1;
+		}
+		if(powerupDraw == 1){
+			powerup.powerupDrawLevelOne(powerup, partOne, partTwo, partThree, partFour, batch);
+		}
+
+		//Ritar ut samtliga racer objekt.
+		racerArray[0].draw(batch);
+		racerArray[1].draw(batch);
+
+		//Ritar ut vinnarens namn.
+		font.draw(batch, winner,700,600);
+		if (testTwo == 4){
+			font.draw(batch, playerText, 752,600);
+		}
+		if(test == 4){
+			font.draw(batch, opponentText,752,600);
+		}
+
+		//printar ut antal varv körda
+		font.draw(batch, String.valueOf(testTwo),100,600);
+		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
+		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
+		batch.end();
+
+		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
+		if (test == 4 || testTwo == 4 ){
+			gameState = GameState.LEVEL_CHANGE_MULTIPLAYER;
+
+			player.setX(605);
+			player.setY(155);
+			player.getSprite().setRotation(0);
+
+			obstacleX = rand.nextInt(1321);
+			obstacleY = rand.nextInt(618);
+			obstacle.setX(obstacleX);
+			obstacle.setY(obstacleY);
+
+			powerupCount = 0;
+			powerupDraw = 0;
+			powerupTime = 400;
+			powerupTimeTwo = 400;
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
 
 			test = 0;
 			testTwo = 0;
+
+		}
+		return gameState;
+	}
+
+	//Metod som används för att rendera level två när man spelar flera spelare.
+	public GameState renderLevelTwoMultiPlayer(){
+		//Uppdaterar positionen av samtliga Racer objekt
+		racerArray[0].updatePostion();
+		racerArray[1].updatePostion();
+
+
+		//Kollar ifall spelare och opponents plockar upp en powerup. checkKeys är metoden som styr bilen ifall man inte kolliderar med hinder/powerup
+		if (player.collidesWithPowerup(powerup.figureArea())){
+			powerupTime = 1;
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (powerupTime >= 1 && powerupTime < 90){
+			powerupTime++;
+			checkKeysPowerup();
+		}
+		else{
+			checkKeys();
+		}
+
+		if (playerTwo.collidesWithPowerup(powerup.figureArea())){
+			powerupTimeTwo = 1;
+			powerupRemoveTwo = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemoveTwo >= 1 && powerupRemoveTwo <= 100){
+			powerupStopTwo++;
+		}
+		if (powerupStopTwo == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemoveTwo = 0;
+			powerupStopTwo = 0;
+		}
+		if (powerupTimeTwo >= 1 && powerupTimeTwo < 90){
+			powerupTimeTwo++;
+			checkKeysPowerupMultiPlayer();
+		}
+		else{
+			checkKeysMultiPlayer();
+		}
+
+
+		//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
+		if (player.collidesWithObstacle(obstacle.figureArea())){
+			checkKeysOutOfBounds();
+		}
+
+		if (playerTwo.collidesWithObstacle(obstacle.figureArea())){
+			checkKeysOutOfBoundsMultiPlayer();
+		}
+
+		//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
+		if (!player.insideTrack(levelTwoPartOne) && !player.insideTrack(levelTwoPartTwo) &&
+				!player.insideTrack(levelTwoPartThree) && !player.insideTrack(levelTwoPartFour) &&
+				!player.insideTrack(levelTwoPartFive) && !player.insideTrack(levelTwoPartSix) &&
+				!player.insideTrack(levelTwoPartSeven) && !player.insideTrack(levelTwoPartEight)) {
+
+			if (player.getX() > 1336 || player.getX() < 30 || player.getY() > 588 || player.getY() < 30) {
+				player.bounceOfEdge();
+			} else {
+				checkKeysOutOfBounds();
+			}
+			player.setSpeedOutOfBounds();
+
+		}
+
+		if (!playerTwo.insideTrack(levelTwoPartOne) && !playerTwo.insideTrack(levelTwoPartTwo) &&
+				!playerTwo.insideTrack(levelTwoPartThree) && !playerTwo.insideTrack(levelTwoPartFour) &&
+				!playerTwo.insideTrack(levelTwoPartFive) && !playerTwo.insideTrack(levelTwoPartSix) &&
+				!playerTwo.insideTrack(levelTwoPartSeven) && !playerTwo.insideTrack(levelTwoPartEight)) {
+
+			if (playerTwo.getX() > 1336 || playerTwo.getX() < 30 || playerTwo.getY() > 588 || playerTwo.getY() < 30) {
+				playerTwo.bounceOfEdge();
+			} else {
+				checkKeysOutOfBoundsMultiPlayer();
+			}
+			playerTwo.setSpeedOutOfBounds();
+
+		}
+
+		//Ökar variablerna när spelaren/motståndaren kört ett varv.
+		int testTwo = player.checkLaps(player);
+
+		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+
+		//Ritar ut level två.
+		trackList.get(1).draw(batch);
+
+		//Ritar ut HUD:en (RÖDA FÄLTET)
+		levelTwo[9].draw(batch);
+
+		//Kontrollerar så att arean av delarna stämmer.
+		//levelOne[0].draw(batch);
+		//levelOne[1].draw(batch);
+		//levelOne[2].draw(batch);
+		//levelOne[3].draw(batch);
+
+		//Ritar ut obstacle
+		obstacle.obstacleDrawLevelTwo(obstacle, levelTwoPartOne, levelTwoPartTwo, levelTwoPartThree, levelTwoPartFour, levelTwoPartFive,
+				levelTwoPartSix, levelTwoPartSeven, levelTwoPartEight, batch);
+
+		//Ritar ut powerup
+		powerupCount = rand.nextInt(100);
+		if(powerupCount == 99){
+			powerupDraw = 1;
+		}
+		if(powerupDraw == 1){
+			powerup.powerupDrawLevelTwo(powerup, levelTwoPartOne, levelTwoPartTwo, levelTwoPartThree, levelTwoPartFour, levelTwoPartFive,
+					levelTwoPartSix, levelTwoPartSeven, levelTwoPartEight, batch);
+		}
+
+		//Ritar ut samtliga racer objekt.
+		racerArray[0].draw(batch);
+		racerArray[1].draw(batch);
+
+		//Ritar ut vinnarens namn.
+		font.draw(batch, winner,700,600);
+		if (testTwo == 4){
+			font.draw(batch, playerText, 752,600);
+		}
+		if(test == 4){
+			font.draw(batch, opponentText,752,600);
+		}
+
+		//printar ut antal varv körda
+		font.draw(batch, String.valueOf(testTwo),100,600);
+		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
+		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
+		batch.end();
+
+		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
+		if (test == 8 || testTwo == 8 ){
+			gameState = GameState.LEVEL_CHANGE_MULTIPLAYER;
+
+			player.setX(605);
+			player.setY(155);
+			player.getSprite().setRotation(0);
+
+			playerTwo.setX(605);
+			playerTwo.setY(100);
+			playerTwo.getSprite().setRotation(0);
+
+			obstacleX = rand.nextInt(1321);
+			obstacleY = rand.nextInt(618);
+			obstacle.setX(obstacleX);
+			obstacle.setY(obstacleY);
+
+			powerupCount = 0;
+			powerupDraw = 0;
+			powerupTime = 400;
+			powerupTimeTwo = 400;
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+
+			test = 0;
+			testTwo = 0;
+
+			levelChangeMultiplayer = 1;
+
+		}
+		return gameState;
+	}
+
+	//Metod som används för att rendera level tre när man spelar flera spelare.
+	public GameState renderLevelThreeMultiPlayer(){
+		//Uppdaterar positionen av samtliga Racer objekt
+		racerArray[0].updatePostion();
+		racerArray[1].updatePostion();
+
+
+		//Kollar ifall spelare och opponents plockar upp en powerup. checkKeys är metoden som styr bilen ifall man inte kolliderar med hinder/powerup
+		if (player.collidesWithPowerup(powerup.figureArea())){
+			powerupTime = 1;
+			powerupRemove = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemove >= 1 && powerupRemove <= 100){
+			powerupStop++;
+		}
+		if (powerupStop == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemove = 0;
+			powerupStop = 0;
+		}
+		if (powerupTime >= 1 && powerupTime < 90){
+			powerupTime++;
+			checkKeysPowerup();
+		}
+		else{
+			checkKeys();
+		}
+
+		if (playerTwo.collidesWithPowerup(powerup.figureArea())){
+			powerupTimeTwo = 1;
+			powerupRemoveTwo = 1;
+			//powerupCount = rand.nextInt(1000);
+		}
+		if (powerupRemoveTwo >= 1 && powerupRemoveTwo <= 100){
+			powerupStopTwo++;
+		}
+		if (powerupStopTwo == 30){
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+			powerupRemoveTwo = 0;
+			powerupStopTwo = 0;
+		}
+		if (powerupTimeTwo >= 1 && powerupTimeTwo < 90){
+			powerupTimeTwo++;
+			checkKeysPowerupMultiPlayer();
+		}
+		else{
+			checkKeysMultiPlayer();
+		}
+
+
+		//Kollar ifall spelaren kolliderar med ett hinder och sänker farten ifall det är sant!
+		if (player.collidesWithObstacle(obstacle.figureArea())){
+			checkKeysOutOfBounds();
+		}
+
+		if (playerTwo.collidesWithObstacle(obstacle.figureArea())){
+			checkKeysOutOfBoundsMultiPlayer();
+		}
+
+		//Kollar ifall spelaren är på banan eller utanför, agerar därefter.
+		if (!player.insideTrack(levelThreePartOne) && !player.insideTrack(levelThreePartTwo) &&
+				!player.insideTrack(levelThreePartThree) && !player.insideTrack(levelThreePartFour) &&
+				!player.insideTrack(levelThreePartFive) && !player.insideTrack(levelThreePartSix) &&
+				!player.insideTrack(levelThreePartSeven) && !player.insideTrack(levelThreePartEight) &&
+				!player.insideTrack(levelThreePartNine) && !player.insideTrack(levelThreePartTen) &&
+				!player.insideTrack(levelThreePartEleven) && !player.insideTrack(levelThreePartTwelve)) {
+
+			if (player.getX() > 1336 || player.getX() < 30 || player.getY() > 588 || player.getY() < 30) {
+				player.bounceOfEdge();
+			} else {
+				checkKeysOutOfBounds();
+			}
+			player.setSpeedOutOfBounds();
+
+		}
+
+		if (!playerTwo.insideTrack(levelThreePartOne) && !playerTwo.insideTrack(levelThreePartTwo) &&
+				!playerTwo.insideTrack(levelThreePartThree) && !playerTwo.insideTrack(levelThreePartFour) &&
+				!playerTwo.insideTrack(levelThreePartFive) && !playerTwo.insideTrack(levelThreePartSix) &&
+				!playerTwo.insideTrack(levelThreePartSeven) && !playerTwo.insideTrack(levelThreePartEight) &&
+				!playerTwo.insideTrack(levelThreePartNine) && !playerTwo.insideTrack(levelThreePartTen) &&
+				!playerTwo.insideTrack(levelThreePartEleven) && !playerTwo.insideTrack(levelThreePartTwelve)) {
+
+			if (playerTwo.getX() > 1336 || playerTwo.getX() < 30 || playerTwo.getY() > 588 || playerTwo.getY() < 30) {
+				playerTwo.bounceOfEdge();
+			} else {
+				checkKeysOutOfBoundsMultiPlayer();
+			}
+			playerTwo.setSpeedOutOfBounds();
+
+		}
+
+		//Ökar variablerna när spelaren/motståndaren kört ett varv.
+		int testTwo = player.checkLaps(player);
+
+		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+
+		//Ritar ut level två.
+		trackList.get(2).draw(batch);
+
+		//Ritar ut HUD:en (RÖDA FÄLTET)
+		levelTwo[9].draw(batch);
+
+		//Kontrollerar så att arean av delarna stämmer.
+		//levelOne[0].draw(batch);
+		//levelOne[1].draw(batch);
+		//levelOne[2].draw(batch);
+		//levelOne[3].draw(batch);
+
+		//Ritar ut obstacle
+		obstacle.obstacleDrawLevelThree(obstacle, levelThreePartOne, levelThreePartTwo, levelThreePartThree, levelThreePartFive,
+				levelThreePartSix, levelThreePartSeven, levelTwoPartEight, levelThreePartNine, levelThreePartTen, levelThreePartEleven, batch);
+
+		//Ritar ut powerup
+		powerupCount = rand.nextInt(100);
+		if(powerupCount == 99){
+			powerupDraw = 1;
+		}
+		if(powerupDraw == 1){
+			powerup.powerupDrawLevelThree(powerup, levelThreePartOne, levelThreePartTwo, levelThreePartThree, levelThreePartFive,
+					levelThreePartSix, levelThreePartSeven, levelTwoPartEight, levelThreePartNine, levelThreePartTen, levelThreePartEleven, batch);
+		}
+
+		//Ritar ut samtliga racer objekt.
+		racerArray[0].draw(batch);
+		racerArray[1].draw(batch);
+
+		//Ritar ut vinnarens namn.
+		font.draw(batch, winner,700,600);
+		if (testTwo == 4){
+			font.draw(batch, playerText, 752,600);
+		}
+		if(test == 4){
+			font.draw(batch, opponentText,752,600);
+		}
+
+		//printar ut antal varv körda
+		font.draw(batch, String.valueOf(testTwo),100,600);
+		font.draw(batch, String.valueOf(test), 100,700);
+		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
+		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
+		batch.end();
+
+		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
+		if (test == 12 || testTwo == 12 ){
+			gameState = GameState.FINISH;
+
+			player.setX(605);
+			player.setY(155);
+			player.getSprite().setRotation(0);
+
+			playerTwo.setX(605);
+			playerTwo.setY(100);
+			playerTwo.getSprite().setRotation(0);
+
+			obstacleX = rand.nextInt(1321);
+			obstacleY = rand.nextInt(618);
+			obstacle.setX(obstacleX);
+			obstacle.setY(obstacleY);
+
+			powerupCount = 0;
+			powerupDraw = 0;
+			powerupTime = 400;
+			powerupTimeTwo = 400;
+			powerup.setX(rand.nextInt(1321));
+			powerup.setY(rand.nextInt(618));
+
+			test = 0;
+			testTwo = 0;
+
+			levelChangeMultiplayer = 1;
 
 		}
 		return gameState;
@@ -1004,6 +1601,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		else if (gameState == GameState.LEVELCHANGE){
 			gameState = renderLevelChange(levelChangeTwo);
 		}
+		else if (gameState == GameState.LEVEL_CHANGE_MULTIPLAYER){
+			renderLevelChangeMultiPlayer(levelChangeMultiplayer);
+		}
 		else if(gameState == GameState.LEVELONE){
 			gameState = renderLevelOne();
 		}
@@ -1012,6 +1612,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		else if(gameState == GameState.LEVELTHREE){
 			renderLevelThree();
+		}
+		else if (gameState == GameState.LEVEL_ONE_MULTIPLAYER){
+			renderLevelOneMultiPlayer();
+		}
+		else if (gameState == GameState.LEVEL_TWO_MULTIPLAYER){
+			renderLevelTwoMultiPlayer();
+		}
+		else if (gameState == GameState.LEVEL_THREE_MULTIPLAYER){
+			renderLevelThreeMultiPlayer();
 		}
 		else if (gameState == GameState.FINISH){
 			renderFinishedState();
