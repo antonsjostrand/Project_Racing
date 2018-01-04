@@ -52,7 +52,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					levelThreePartNine, levelThreePartTen, levelThreePartEleven, levelThreePartTwelve;
 
 
-	private int testTwo = 0, test = 0, powerupCount = 0, powerupDraw = 0, powerupTime = 0, powerupRemove = 0, powerupStop = 0;
+	private int powerupCount = 0, powerupDraw = 0, powerupTime = 0, powerupRemove = 0, powerupStop = 0;
 	private int powerupTimeTwo = 0, powerupRemoveTwo = 0, powerupStopTwo = 0;
 	private int levelChangeOne = 0, levelChangeTwo = 0, levelChangeMultiplayer = 0;
 	private int mainMenuOne = 0, mainMenuTwo = 0;
@@ -1397,9 +1397,6 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerup.setX(rand.nextInt(1321));
 			powerup.setY(rand.nextInt(618));
 
-			test = 0;
-			testTwo = 0;
-
 			levelChangeMultiplayer = 1;
 
 		}
@@ -1578,9 +1575,6 @@ public class MyGdxGame extends ApplicationAdapter {
 			powerupTimeTwo = 400;
 			powerup.setX(rand.nextInt(1321));
 			powerup.setY(rand.nextInt(618));
-
-			test = 0;
-			testTwo = 0;
 
 			levelChangeMultiplayer = 1;
 
