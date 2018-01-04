@@ -5,14 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Timer;
 
 public class MyGdxGame extends ApplicationAdapter {
 	private ArrayList<Racer> racerList = new ArrayList<>();
@@ -27,6 +25,13 @@ public class MyGdxGame extends ApplicationAdapter {
 							LEVEL_THREE_MULTIPLAYER, MAINMENU, LEVELCHANGE, LEVEL_CHANGE_MULTIPLAYER, FINISH};
 	private GameState gameState = GameState.MAINMENU;
 	private PlayState levelTransition, mainMenu, finishedState;
+	private PlayState HUD, HUDMultiplayer, lapOne, lapTwo, lapThree, lapFour, lapFive, lapSix, lapSeven,
+						lapOneOpponentOne, lapTwoOpponentOne, lapThreeOpponentOne, lapFourOpponentOne,
+						lapFiveOpponentOne, lapSixOpponentOne, lapSevenOpponentOne,
+						lapOneOpponentTwo, lapTwoOpponentTwo, lapThreeOpponentTwo, lapFourOpponentTwo,
+						lapFiveOpponentTwo,lapSixOpponentTwo, lapSevenOpponentTwo,
+						lapOneOpponentThree, lapTwoOpponentThree, lapThreeOpponentThree, lapFourOpponentThree,
+						lapFiveOpponentThree,lapSixOpponentThree, lapSevenOpponentThree;
 
 	private SpriteBatch batch;
 
@@ -103,6 +108,45 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 	//Metod för att skapa HUD:en
 	public void createHUD(){
+		HUD = new PlayState("HUD.png",0,618,1366,150);
+		HUDMultiplayer = new PlayState("HUD_MULTIPLAYER.png",0,618,1366,150);
+
+		//Skapar spelarens varvbilder
+		lapOne = new PlayState("LapOne.png", 429,690,50,50);
+		lapTwo = new PlayState("LapTwo.png", 429,690,50,50);
+		lapThree = new PlayState("LapThree.png", 429,690,50,50);
+		lapFour = new PlayState("LapFour.png", 429,690,50,50);
+		lapFive = new PlayState("LapFive.png", 429,690,50,50);
+		lapSix = new PlayState("LapSix.png", 429,690,50,50);
+		lapSeven = new PlayState("LapSeven.png", 429,690,50,50);
+
+		//Skapar motståndare etts varv bilder
+		lapOneOpponentOne = new PlayState("LapOne.png",429,625,50,50);
+		lapTwoOpponentOne = new PlayState("LapTwo.png",429,625,50,50);
+		lapThreeOpponentOne = new PlayState("LapThree.png",429,625,50,50);
+		lapFourOpponentOne = new PlayState("LapFour.png",429,625,50,50);
+		lapFiveOpponentOne = new PlayState("LapFive.png",429,625,50,50);
+		lapSixOpponentOne = new PlayState("LapSix.png",429,625,50,50);
+		lapSevenOpponentOne = new PlayState("LapSeven.png",429,625,50,50);
+
+		//Skapar motståndare två varv bilder
+		lapOneOpponentTwo = new PlayState("LapOne.png",1292,690,50,50);
+		lapTwoOpponentTwo = new PlayState("LapTwo.png",1292,690,50,50);
+		lapThreeOpponentTwo = new PlayState("LapThree.png",1292,690,50,50);
+		lapFourOpponentTwo = new PlayState("LapFour.png",1292,690,50,50);
+		lapFiveOpponentTwo = new PlayState("LapFive.png",1292,690,50,50);
+		lapSixOpponentTwo = new PlayState("LapSix.png",1292,690,50,50);
+		lapSevenOpponentTwo = new PlayState("LapSeven.png",1292,690,50,50);
+
+		//Skapar motståndare tres varv bilder
+		lapOneOpponentThree = new PlayState("LapOne.png",1292,625,50,50);
+		lapTwoOpponentThree = new PlayState("LapTwo.png",1292,625,50,50);
+		lapThreeOpponentThree = new PlayState("LapThree.png",1292,625,50,50);
+		lapFourOpponentThree = new PlayState("LapFour.png",1292,625,50,50);
+		lapFiveOpponentThree = new PlayState("LapFive.png",1292,625,50,50);
+		lapSixOpponentThree = new PlayState("LapSix.png",1292,625,50,50);
+		lapSevenOpponentThree = new PlayState("LapSeven.png",1292,625,50,50);
+
 		Track HUD = new Track("Opponent.png",0,618,1366,150);
 		levelTwo[9] = HUD;
 	}
@@ -250,11 +294,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		finishedState = new PlayState("FinishedState.png",0,0,1366,618);
 	}
 
-	//Återställer varven
-	public int resetLaps(int reset){
-		return reset = 0;
-	}
-
 	//Metod som används för att rendera level change.
 	public GameState renderLevelChange(int levelChangeTwo){
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
@@ -309,7 +348,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			mainMenuTwo++;
 		}
 
-		Gdx.gl.glClearColor(0, 1, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		mainMenu.draw(batch);
@@ -440,8 +479,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Ritar ut level ett.
 		trackList.get(0).draw(batch);
 
-		//Ritar ut HUD:en (RÖDA FÄLTET)
-		levelTwo[9].draw(batch);
+		//Ritar ut HUD:en
+		HUD.draw(batch);
+
 
 		//Kontrollerar så att arean av delarna stämmer.
 		//levelOne[0].draw(batch);
@@ -465,20 +505,24 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerList.get(0).draw(batch);
 		racerArray[0].draw(batch);
 
-		//Ritar ut vinnarens namn.
-		font.draw(batch, winner,700,600);
-		if (lapCheck == 3){
-			font.draw(batch, playerText, 752,600);
-		}
-		if(lapCheckOpponentOne == 3){
-			font.draw(batch, opponentText,752,600);
+		//Ritar ut hur många varv spelaren kört.
+		if (lapCheck == 1){
+			lapOne.draw(batch);
+		}else if (lapCheck == 2){
+			lapTwo.draw(batch);
+		}else if (lapCheck == 3){
+			lapThree.draw(batch);
 		}
 
-		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(lapCheck),100,600);
-		font.draw(batch, String.valueOf(lapCheckOpponentOne), 100,700);
-		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
-		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
+		//Ritar ut hur många varv motståndaren kört.
+		if (lapCheckOpponentOne == 1){
+			lapOneOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 2){
+			lapTwoOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 3){
+			lapThreeOpponentOne.draw(batch);
+		}
+
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
@@ -639,7 +683,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		trackList.get(1).draw(batch);
 
 		//Ritar ut HUD:en
-		levelTwo[9].draw(batch);
+		HUD.draw(batch);
 
 		//Kontroll av arean så den stämmer.
 		//levelTwo[0].draw(batch);
@@ -679,13 +723,48 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(batch, opponentText,752,600);
 		}
 
-		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(lapCheck),100,600);
-		font.draw(batch, String.valueOf(lapCheckOpponentOne), 100,700);
+		//Ritar ut hur många varv spelaren kört.
+		if (lapCheck == 1){
+			lapOne.draw(batch);
+		}else if (lapCheck == 2){
+			lapTwo.draw(batch);
+		}else if (lapCheck == 3){
+			lapThree.draw(batch);
+		}else if (lapCheck == 4){
+			lapFour.draw(batch);
+		}else if (lapCheck == 5){
+			lapFive.draw(batch);
+		}
+
+		//Ritar ut hur många varv motståndare ett kört.
+		if (lapCheckOpponentOne == 1){
+			lapOneOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 2){
+			lapTwoOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 3){
+			lapThreeOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 4){
+			lapFourOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 5){
+			lapFiveOpponentOne.draw(batch);
+		}
+
+		//Ritar ut hur många varv motståndare två kört.
+		if (lapCheckOpponentTwo == 1){
+			lapOneOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 2){
+			lapTwoOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 3){
+			lapThreeOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 4){
+			lapFourOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 5){
+			lapFiveOpponentTwo.draw(batch);
+		}
 
         batch.end();
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (lapCheck == 5 || lapCheckOpponentOne == 5 ){
+		if (lapCheck == 5 || lapCheckOpponentOne == 5 || lapCheckOpponentTwo == 5){
 			gameState = GameState.LEVELCHANGE;
 
 			player.setX(605);
@@ -986,11 +1065,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 
-		//Ritar ut level ett.
+		//Ritar ut level tre.
 		trackList.get(2).draw(batch);
 
-		//Ritar ut HUD:en (RÖDA FÄLTET)
-		levelTwo[9].draw(batch);
+		//Ritar ut HUD:en
+		HUD.draw(batch);
 
 		//Kontrollerar så att arean av delarna stämmer.
 	//	levelThree[0].draw(batch);
@@ -1011,7 +1090,6 @@ public class MyGdxGame extends ApplicationAdapter {
 				levelThreePartSix, levelThreePartSeven, levelTwoPartEight, levelThreePartNine, levelThreePartTen, levelThreePartEleven, batch);
 
 		//Ritar ut powerup
-		//Ritar ut powerup
 		powerupCount = rand.nextInt(100);
 		if(powerupCount == 99){
 			powerupDraw = 1;
@@ -1030,26 +1108,77 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Ritar ut spelaren
 		racerArray[0].draw(batch);
 
-		//Ritar ut vinnarens namn.
-		font.draw(batch, winner,700,600);
-		if (lapCheck == 7){
-			font.draw(batch, playerText, 752,600);
-		}
-		if(lapCheckOpponentOne == 7){
-			font.draw(batch, opponentText,752,600);
+		//Ritar ut hur många varv spelaren kört.
+		if (lapCheck == 1){
+			lapOne.draw(batch);
+		}else if (lapCheck == 2){
+			lapTwo.draw(batch);
+		}else if (lapCheck == 3){
+			lapThree.draw(batch);
+		}else if (lapCheck == 4){
+			lapFour.draw(batch);
+		}else if (lapCheck == 5){
+			lapFive.draw(batch);
+		}else if (lapCheck == 6){
+			lapSix.draw(batch);
+		}else if (lapCheck == 7){
+			lapSeven.draw(batch);
 		}
 
-		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(lapCheck),100,600);
-		font.draw(batch, String.valueOf(lapCheckOpponentOne), 100,700);
+		//Ritar ut hur många varv motståndare ett kört.
+		if (lapCheckOpponentOne == 1){
+			lapOneOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 2){
+			lapTwoOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 3){
+			lapThreeOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 4){
+			lapFourOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 5){
+			lapFiveOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 6){
+			lapSixOpponentOne.draw(batch);
+		}else if (lapCheckOpponentOne == 7){
+			lapSevenOpponentOne.draw(batch);
+		}
 
-		//TEST COLLISION
-		font.draw(batch, String.valueOf(opponentThree.getX()),100,650);
-		font.draw(batch, String.valueOf(opponentThree.getY()),100,750);
+		//Ritar ut hur många varv motståndare två kört.
+		if (lapCheckOpponentTwo == 1){
+			lapOneOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 2){
+			lapTwoOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 3){
+			lapThreeOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 4){
+			lapFourOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 5) {
+			lapFiveOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 6){
+			lapSixOpponentTwo.draw(batch);
+		}else if (lapCheckOpponentTwo == 7){
+			lapSevenOpponentTwo.draw(batch);
+		}
+
+		//Ritar ut hur många varv motståndare två kört.
+		if (lapCheckOpponentThree == 1){
+			lapOneOpponentThree.draw(batch);
+		}else if (lapCheckOpponentThree == 2){
+			lapTwoOpponentThree.draw(batch);
+		}else if (lapCheckOpponentThree == 3){
+			lapThreeOpponentThree.draw(batch);
+		}else if (lapCheckOpponentThree == 4){
+			lapFourOpponentThree.draw(batch);
+		}else if (lapCheckOpponentThree == 5){
+			lapFiveOpponentThree.draw(batch);
+		}else if (lapCheckOpponentThree == 6){
+			lapSixOpponentThree.draw(batch);
+		}else if (lapCheckOpponentThree == 7){
+			lapSevenOpponentThree.draw(batch);
+		}
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (lapCheck == 7 || lapCheckOpponentOne == 7){
+		if (lapCheck == 7 || lapCheckOpponentOne == 7 || lapCheckOpponentTwo == 7 || lapCheckOpponentThree == 7){
 			gameState = GameState.FINISH;
 
 			player.setX(605);
@@ -1163,8 +1292,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Ritar ut level ett.
 		trackList.get(0).draw(batch);
 
-		//Ritar ut HUD:en (RÖDA FÄLTET)
-		levelTwo[9].draw(batch);
+		//Ritar ut HUD:en
+		HUDMultiplayer.draw(batch);
 
 		//Kontrollerar så att arean av delarna stämmer.
 		//levelOne[0].draw(batch);
@@ -1189,19 +1318,23 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerArray[1].draw(batch);
 
 		//Ritar ut vinnarens namn.
-		font.draw(batch, winner,700,600);
-		if (lapCheck == 3){
-			font.draw(batch, playerText, 752,600);
-		}
-		if(lapCheckPlayerTwo == 3){
-			font.draw(batch, opponentText,752,600);
+		//Ritar ut hur många varv spelaren kört.
+		if (lapCheck == 1){
+			lapOne.draw(batch);
+		}else if (lapCheck == 2){
+			lapTwo.draw(batch);
+		}else if (lapCheck == 3){
+			lapThree.draw(batch);
 		}
 
-		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(lapCheck),100,600);
-		font.draw(batch, String.valueOf(lapCheckPlayerTwo), 100,700);
-		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
-		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
+		//Ritar ut hur många varv motståndaren kört.
+		if (lapCheckPlayerTwo == 1){
+			lapOneOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 2){
+			lapTwoOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 3){
+			lapThreeOpponentOne.draw(batch);
+		}
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
@@ -1211,6 +1344,10 @@ public class MyGdxGame extends ApplicationAdapter {
 			player.setX(605);
 			player.setY(155);
 			player.getSprite().setRotation(0);
+
+			playerTwo.setX(605);
+			playerTwo.setY(100);
+			playerTwo.getSprite().setRotation(0);
 
 			obstacleX = rand.nextInt(1321);
 			obstacleY = rand.nextInt(618);
@@ -1330,8 +1467,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Ritar ut level två.
 		trackList.get(1).draw(batch);
 
-		//Ritar ut HUD:en (RÖDA FÄLTET)
-		levelTwo[9].draw(batch);
+		//Ritar ut HUD:en
+		HUDMultiplayer.draw(batch);
 
 		//Kontrollerar så att arean av delarna stämmer.
 		//levelOne[0].draw(batch);
@@ -1357,20 +1494,31 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerArray[0].draw(batch);
 		racerArray[1].draw(batch);
 
-		//Ritar ut vinnarens namn.
-		font.draw(batch, winner,700,600);
-		if (lapCheck == 5){
-			font.draw(batch, playerText, 752,600);
-		}
-		if(lapCheckPlayerTwo == 5){
-			font.draw(batch, opponentText,752,600);
+		//Ritar ut hur många varv spelaren kört.
+		if (lapCheck == 1){
+			lapOne.draw(batch);
+		}else if (lapCheck == 2){
+			lapTwo.draw(batch);
+		}else if (lapCheck == 3){
+			lapThree.draw(batch);
+		}else if (lapCheck == 4){
+			lapFour.draw(batch);
+		}else if (lapCheck == 5) {
+			lapFive.draw(batch);
 		}
 
-		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(lapCheck),100,600);
-		font.draw(batch, String.valueOf(lapCheckPlayerTwo), 100,700);
-		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
-		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
+		//Ritar ut hur många varv motståndare ett kört.
+		if (lapCheckPlayerTwo == 1){
+			lapOneOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 2){
+			lapTwoOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 3){
+			lapThreeOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 4){
+			lapFourOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 5) {
+			lapFiveOpponentOne.draw(batch);
+		}
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
@@ -1509,8 +1657,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Ritar ut level två.
 		trackList.get(2).draw(batch);
 
-		//Ritar ut HUD:en (RÖDA FÄLTET)
-		levelTwo[9].draw(batch);
+		//Ritar ut HUD:en
+		HUDMultiplayer.draw(batch);
 
 		//Kontrollerar så att arean av delarna stämmer.
 		//levelOne[0].draw(batch);
@@ -1536,20 +1684,39 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerArray[0].draw(batch);
 		racerArray[1].draw(batch);
 
-		//Ritar ut vinnarens namn.
-		font.draw(batch, winner,700,600);
-		if (lapCheck == 7){
-			font.draw(batch, playerText, 752,600);
-		}
-		if(lapCheckPlayerTwo == 7){
-			font.draw(batch, opponentText,752,600);
+		//Ritar ut hur många varv spelaren kört.
+		if (lapCheck == 1){
+			lapOne.draw(batch);
+		}else if (lapCheck == 2){
+			lapTwo.draw(batch);
+		}else if (lapCheck == 3){
+			lapThree.draw(batch);
+		}else if (lapCheck == 4){
+			lapFour.draw(batch);
+		}else if (lapCheck == 5){
+			lapFive.draw(batch);
+		}else if (lapCheck == 6){
+			lapSix.draw(batch);
+		}else if (lapCheck == 7){
+			lapSeven.draw(batch);
 		}
 
-		//printar ut antal varv körda
-		font.draw(batch, String.valueOf(lapCheck),100,600);
-		font.draw(batch, String.valueOf(lapCheckPlayerTwo), 100,700);
-		font.draw(batch, String.valueOf(obstacle.getX()),200,600);
-		font.draw(batch, String.valueOf(obstacle.getY()), 200,700);
+		//Ritar ut hur många varv motståndare ett kört.
+		if (lapCheckPlayerTwo == 1){
+			lapOneOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 2){
+			lapTwoOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 3){
+			lapThreeOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 4){
+			lapFourOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 5){
+			lapFiveOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 6){
+			lapSixOpponentOne.draw(batch);
+		}else if (lapCheckPlayerTwo == 7){
+			lapSevenOpponentOne.draw(batch);
+		}
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.

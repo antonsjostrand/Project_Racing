@@ -136,20 +136,6 @@ public class Racer {
         return antiCheatLapsLevelThree;
     }
 
-    //Metod för att stänga av spelet när någon kört 3 varv.
-    public int checkLaps(Racer racer){
-        float x = racer.getX();
-        float y = racer.getY();
-
-        if ((x >= 690 && x <= 693) && (y >= 46 && y <= 205)){
-            laps++;
-            if(laps == 4){
-                //System.exit(0);
-            }
-        }
-        return laps;
-    }
-
     //Ändrar farten för samtliga opponents när de kör på ett hinder.
     public void opponentCollideObstacle(){
         if (getSpeedX() > 0){
@@ -218,6 +204,15 @@ public class Racer {
                 getSprite().getHeight() - (SHRINK_COLLISION_RADIUS_HEIGHT)
         );
     }
+    //Används för att kontrollera om man kolliderar med powerup eller obstacle
+    public Rectangle getCollisionAreaFigure(){
+        return new Rectangle(
+                getSprite().getX()+3,
+                getSprite().getY()+2,
+                getSprite().getWidth()-10,
+                getSprite().getHeight()-2
+        );
+    }
 
 
     //Metod som tar en rektangel som parameter och sedan kollar ifall en racer kolliderar med en annan.
@@ -232,12 +227,12 @@ public class Racer {
 
     //Metod som kollar ifall man kolliderar med ett hinder
     public boolean collidesWithObstacle(Rectangle obstacle){
-        return getCollisionAreaRacer().overlaps(obstacle);
+        return getCollisionAreaFigure().overlaps(obstacle);
     }
 
     //Metod som kollar ifall man kolliderar med em powerup
     public boolean collidesWithPowerup(Rectangle obstacle){
-        return getCollisionAreaRacer().overlaps(obstacle);
+        return getCollisionAreaFigure().overlaps(obstacle);
     }
     //Metod för att rita ut objekt.
     public void draw(SpriteBatch batch){

@@ -42,7 +42,7 @@ public class Figure {
         return sprite;
     }
 
-    //Används vid placering av hinder/powerup
+    //Används vid placering av hinder.
     public Rectangle figureRectangle(){
         return new Rectangle(
                 getSprite().getX() + 25,
@@ -52,7 +52,7 @@ public class Figure {
         );
 
     }
-
+    //Används vid placering av powerups
     public Rectangle figureRectanglePowerup(){
         return new Rectangle(
                 getSprite().getX() + 12.5f,
@@ -63,12 +63,12 @@ public class Figure {
 
     }
 
-    //Används vid kontroll av kollision med hinder.
+    //Används vid kontroll av kollision med hinder och powerups.
     public Rectangle figureArea(){
         return new Rectangle(
                 getSprite().getX(),
                 getSprite().getY(),
-                getSprite().getWidth(),
+                getSprite().getWidth()-5,
                 getSprite().getHeight()
         );
     }
