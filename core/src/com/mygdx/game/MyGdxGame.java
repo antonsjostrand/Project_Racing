@@ -88,22 +88,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	//Metod för att skapa motståndare
 	public void createOpponents(){
-		opponentOne = new Opponent("Opponent.png",605,60,35,17.5f);
+		opponentOne = new Opponent("OpponentOne.png",605,60,35,20f);
 		racerList.add(opponentOne);
 
-		opponentTwo = new OpponentTwo("Opponent.png", 605,120,35,17.5f);
+		opponentTwo = new OpponentTwo("OpponentTwo.png", 605,120,35,20f);
 		racerList.add(opponentTwo);
 
-		opponentThree = new OpponentThree ("Opponent.png",605,90,35,17.5f);
+		opponentThree = new OpponentThree ("OpponentThree.png",605,90,35,20f);
 		racerList.add(opponentThree);
 	}
 
 	//Metod för att skapa spelare ett och spelare två
 	public void createPlayer(){
-		player = new Player("Player.png", 605,150,35,17.5f);
+		player = new Player("PlayerCar.png", 605,150,35,20f);
 		racerArray[0] = player;
 
-		playerTwo = new Player("Player.png", 605, 100,35,17.5f);
+		playerTwo = new Player("PlayerTwoCar.png", 605, 100,35,20f);
 		racerArray[1] = playerTwo;
 	}
 	//Metod för att skapa HUD:en
@@ -158,7 +158,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		partOne = levelOneTrack.trackPartArea(45,45,1277,140);
 		partTwo = levelOneTrack.trackPartArea(1181,185,140,251);
 		partThree = levelOneTrack.trackPartArea(45,434,1277,140);
-		partFour = levelOneTrack.trackPartArea(45,185,140,251);
+		partFour = levelOneTrack.trackPartArea(45,185,135,251);
 
 		Track roadOne = new Track("Player.png", 45,45,1277,140);
 		levelOne[0] = roadOne;
@@ -187,7 +187,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		levelTwoPartFive = levelTwoTrack.trackPartArea(444,209,480,100);
 		levelTwoPartSix = levelTwoTrack.trackPartArea(444,309,140,126);
 		levelTwoPartSeven = levelTwoTrack.trackPartArea(45,434,539,140);
-		levelTwoPartEight = levelTwoTrack.trackPartArea(45,185,140,251);
+		levelTwoPartEight = levelTwoTrack.trackPartArea(45,185,135,251);
 
 		Track roadOne = new Track("Player.png", 45,45,1277,140);
 		levelTwo[0] = roadOne;
@@ -272,13 +272,13 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void createObstacle(){
 		obstacleY = rand.nextInt(618);
 		obstacleX = rand.nextInt(1320);
-		obstacle = new Obstacle("Obstacle.png", obstacleX,obstacleY,50);
+		obstacle = new Obstacle("ObstacleOil.png", obstacleX,obstacleY,50);
 	}
 	//Skapa powerup
 	public void createPowerup(){
 		powerupX = rand.nextInt(1320);
 		powerupY = rand.nextInt(618);
-		powerup = new Powerup("Powerup.png", powerupX, powerupY, 25);
+		powerup = new Powerup("PowerupCrate.png", powerupX, powerupY, 25);
 
 	}
 	//Skapar levelchange gamestate

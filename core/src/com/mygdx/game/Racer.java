@@ -66,7 +66,7 @@ public class Racer {
     }
 
 
-
+    //Metod som förhindrar fusk på level ett och räknar varv.
     public int antiCheatingLevelOne(Racer racer) {
         if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
             antiCheatCount++;
@@ -83,7 +83,7 @@ public class Racer {
         }
         return antiCheatLaps;
     }
-
+    //Metod som förhindrar fusk på level två och räknar varv.
     public int antiCheatingLevelTwo(Racer racer) {
         if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
             antiCheatCountLevelTwo++;
@@ -106,7 +106,7 @@ public class Racer {
         }
         return antiCheatLapsLevelTwo;
     }
-
+    //Metod som förhindrar fusk på level tre och räknar varv.
     public int antiCheatingLevelThree(Racer racer) {
         if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
             antiCheatCountLevelThree++;
@@ -139,31 +139,31 @@ public class Racer {
     //Ändrar farten för samtliga opponents när de kör på ett hinder.
     public void opponentCollideObstacle(){
         if (getSpeedX() > 0){
-            setSpeedX(0.1f);
+            setSpeedX(0.5f);
         }
         else if (getSpeedX() < 0){
-            setSpeedX(-0.1f);
+            setSpeedX(-0.5f);
         }
         if (getSpeedY() > 0){
-            setSpeedY(0.1f);
+            setSpeedY(0.5f);
         }
         else if (getSpeedY() < 0){
-            setSpeedY(-0.1f);
+            setSpeedY(-0.5f);
         }
     }
 
     //används när opponent inte kolliderar med hinder för att accelera igen
     public void opponentNotCollideObstacle(){
-        if (getSpeedX() == 0.1f){
+        if (getSpeedX() == 0.5f){
             setSpeedX(3);
         }
-        else if (getSpeedX() == -0.1f){
+        else if (getSpeedX() == -0.5f){
             setSpeedX(-3);
         }
-        if (getSpeedY() == 0.1f){
+        if (getSpeedY() == 0.5f){
             setSpeedY(3);
         }
-        else if (getSpeedY() == -0.1f){
+        else if (getSpeedY() == -0.5f){
             setSpeedY(-3);
         }
     }

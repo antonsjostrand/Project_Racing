@@ -92,81 +92,81 @@ public class Player extends Racer{
     //Metod som används för att flytta på spelaren när den kör utanför banan.
     public void accelerateOutOfBounds(){
         if(getSprite().getRotation() >= 0 && getSprite().getRotation() < 25){
-            setSpeedX(0.1f);
+            setSpeedX(0.5f);
             setSpeedY(0);
         }
         else if(getSprite().getRotation() >= 25 && getSprite().getRotation() < 65){
-            setSpeedX(0.1f);
-            setSpeedY(0.1f);
+            setSpeedX(0.5f);
+            setSpeedY(0.5f);
         }
         else if(getSprite().getRotation() >= 65 && getSprite().getRotation() < 115){
             setSpeedX(0);
-            setSpeedY(0.1f);
+            setSpeedY(0.5f);
         }
         else if(getSprite().getRotation() >= 115 && getSprite().getRotation() < 155){
-            setSpeedX(-0.1f);
-            setSpeedY(0.1f);
+            setSpeedX(-0.5f);
+            setSpeedY(0.5f);
         }
         else if(getSprite().getRotation() >= 155 && getSprite().getRotation() < 205){
-            setSpeedX(-0.1f);
+            setSpeedX(-0.5f);
             setSpeedY(0);
         }
         else if(getSprite().getRotation() >= 205 && getSprite().getRotation() < 245){
-            setSpeedX(-0.1f);
-            setSpeedY(-0.1f);
+            setSpeedX(-0.5f);
+            setSpeedY(-0.5f);
         }
         else if(getSprite().getRotation() >= 245 && getSprite().getRotation() < 295){
             setSpeedX(0);
-            setSpeedY(-0.1f);
+            setSpeedY(-0.5f);
         }
         else if(getSprite().getRotation() >= 295 && getSprite().getRotation() < 335){
-            setSpeedX(0.1f);
-            setSpeedY(-0.1f);
+            setSpeedX(0.5f);
+            setSpeedY(-0.5f);
         }
         else if(getSprite().getRotation() == 360){
             getSprite().setRotation(0);
         }
         else if(getSprite().getRotation() >= 335 && getSprite().getRotation() < 25){
-            setSpeedX(0.1f);
+            setSpeedX(0.5f);
             setSpeedY(0);
         }
         if(getSprite().getRotation() <= 0 && getSprite().getRotation() > -25){
-            setSpeedX(0.1f);
+            setSpeedX(0.5f);
             setSpeedY(0);
         }
         else if(getSprite().getRotation() <= -25 && getSprite().getRotation() > -65){
-            setSpeedX(0.1f);
-            setSpeedY(-0.1f);
+            setSpeedX(0.5f);
+            setSpeedY(-0.5f);
         }
         else if(getSprite().getRotation() <= -65 && getSprite().getRotation() > -115){
             setSpeedX(0);
-            setSpeedY(-0.1f);
+            setSpeedY(-0.5f);
         }
         else if(getSprite().getRotation() <= -115 && getSprite().getRotation() > -155){
-            setSpeedX(-0.1f);
-            setSpeedY(-0.1f);
+            setSpeedX(-0.5f);
+            setSpeedY(-0.5f);
         }
         else if(getSprite().getRotation() <= -155 && getSprite().getRotation() > -205){
-            setSpeedX(-0.1f);
+            setSpeedX(-0.5f);
             setSpeedY(0);
         }
         else if(getSprite().getRotation() <= -205 && getSprite().getRotation() > -245){
-            setSpeedX(-0.1f);
-            setSpeedY(0.1f);
+            setSpeedX(-0.5f);
+            setSpeedY(0.5f);
         }
         else if(getSprite().getRotation() <= -245 && getSprite().getRotation() > -295){
             setSpeedX(0);
-            setSpeedY(0.1f);
+            setSpeedY(0.5f);
         }
         else if(getSprite().getRotation() <= -295 && getSprite().getRotation() > -335){
-            setSpeedX(0.1f);
-            setSpeedY(0.1f);
+            setSpeedX(0.5f);
+            setSpeedY(0.5f);
         }
         else if(getSprite().getRotation() == -360){
             getSprite().setRotation(0);
         }
         else if(getSprite().getRotation() <= -335 && getSprite().getRotation() > -25){
-            setSpeedX(0.1f);
+            setSpeedX(0.5f);
             setSpeedY(0);
         }
     }
