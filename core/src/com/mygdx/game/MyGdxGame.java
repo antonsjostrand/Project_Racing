@@ -32,6 +32,7 @@ public class MyGdxGame extends ApplicationAdapter {
 						lapFiveOpponentTwo,lapSixOpponentTwo, lapSevenOpponentTwo,
 						lapOneOpponentThree, lapTwoOpponentThree, lapThreeOpponentThree, lapFourOpponentThree,
 						lapFiveOpponentThree,lapSixOpponentThree, lapSevenOpponentThree;
+	private PlayState playerName, playerNameMultiPlayer, playerTwoName, opponentOneName, opponentTwoName, opponentThreeName;
 
 	private SpriteBatch batch;
 
@@ -47,7 +48,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private int powerupX, powerupY;
 
 	private BitmapFont font;
-	private String winner = "Winner: " , opponentText = "Opponent", playerText = "Player";
+
 
 	private Rectangle partOne, partTwo, partThree, partFour;
 	private Rectangle levelTwoPartOne, levelTwoPartTwo, levelTwoPartThree, levelTwoPartFour,
@@ -147,8 +148,14 @@ public class MyGdxGame extends ApplicationAdapter {
 		lapSixOpponentThree = new PlayState("LapSix.png",1292,625,50,50);
 		lapSevenOpponentThree = new PlayState("LapSeven.png",1292,625,50,50);
 
-		Track HUD = new Track("Opponent.png",0,618,1366,150);
-		levelTwo[9] = HUD;
+		//Skapar texterna som visar vinnaren.
+		playerName = new PlayState("PlayerName.png",590,630,162,48);
+		playerNameMultiPlayer = new PlayState("PlayerName.png",935,660,162,48);
+		playerTwoName = new PlayState("PlayerTwoName.png",935,660,162,48);
+		opponentOneName = new PlayState("OpponentOneName.png",545,630,248,48);
+		opponentTwoName = new PlayState("OpponentTwoName.png",545,630,248,48);
+		opponentThreeName = new PlayState("OpponentThreeName.png",545,630,248,48);
+
 	}
 	//Skapar level ett och rektanglar som representerar en del av banan.
 	public void createLevelOne(){
@@ -512,6 +519,12 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapTwo.draw(batch);
 		}else if (lapCheck == 3){
 			lapThree.draw(batch);
+			playerName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+				if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+					lapCheck = 4;
+				}
 		}
 
 		//Ritar ut hur många varv motståndaren kört.
@@ -521,12 +534,18 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapTwoOpponentOne.draw(batch);
 		}else if (lapCheckOpponentOne == 3){
 			lapThreeOpponentOne.draw(batch);
+			opponentOneName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckOpponentOne = 4;
+			}
 		}
 
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (lapCheck == 3 || lapCheckOpponentOne == 3 ){
+		if (lapCheck == 4 || lapCheckOpponentOne == 4){
 			gameState = GameState.LEVELCHANGE;
 
 			player.setX(605);
@@ -714,15 +733,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		racerList.get(1).draw(batch);
 		racerArray[0].draw(batch);
 
-		//Ritar ut vinnarens namn
-		font.draw(batch, winner,700,600);
-		if (lapCheck == 5){
-			font.draw(batch, playerText, 752,600);
-		}
-		if(lapCheckOpponentOne == 5){
-			font.draw(batch, opponentText,752,600);
-		}
-
 		//Ritar ut hur många varv spelaren kört.
 		if (lapCheck == 1){
 			lapOne.draw(batch);
@@ -734,6 +744,14 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapFour.draw(batch);
 		}else if (lapCheck == 5){
 			lapFive.draw(batch);
+			playerName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+			opponentTwo.setSpeedX(0);
+			opponentTwo.setSpeedY(0);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheck = 6;
+			}
 		}
 
 		//Ritar ut hur många varv motståndare ett kört.
@@ -747,6 +765,14 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapFourOpponentOne.draw(batch);
 		}else if (lapCheckOpponentOne == 5){
 			lapFiveOpponentOne.draw(batch);
+			opponentOneName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+			opponentTwo.setSpeedX(0);
+			opponentTwo.setSpeedY(0);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckOpponentOne = 6;
+			}
 		}
 
 		//Ritar ut hur många varv motståndare två kört.
@@ -760,11 +786,19 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapFourOpponentTwo.draw(batch);
 		}else if (lapCheckOpponentTwo == 5){
 			lapFiveOpponentTwo.draw(batch);
+			opponentTwoName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+			opponentTwo.setSpeedX(0);
+			opponentTwo.setSpeedY(0);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckOpponentTwo = 6;
+			}
 		}
 
         batch.end();
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (lapCheck == 5 || lapCheckOpponentOne == 5 || lapCheckOpponentTwo == 5){
+		if (lapCheck == 6 || lapCheckOpponentOne == 6 || lapCheckOpponentTwo == 6){
 			gameState = GameState.LEVELCHANGE;
 
 			player.setX(605);
@@ -1123,6 +1157,16 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapSix.draw(batch);
 		}else if (lapCheck == 7){
 			lapSeven.draw(batch);
+			playerName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+			opponentTwo.setSpeedX(0);
+			opponentTwo.setSpeedY(0);
+			opponentThree.setSpeedX(0);
+			opponentThree.setSpeedY(0);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheck = 8;
+			}
 		}
 
 		//Ritar ut hur många varv motståndare ett kört.
@@ -1140,6 +1184,16 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapSixOpponentOne.draw(batch);
 		}else if (lapCheckOpponentOne == 7){
 			lapSevenOpponentOne.draw(batch);
+			opponentOneName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+			opponentTwo.setSpeedX(0);
+			opponentTwo.setSpeedY(0);
+			opponentThree.setSpeedX(0);
+			opponentThree.setSpeedY(0);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckOpponentOne = 8;
+			}
 		}
 
 		//Ritar ut hur många varv motståndare två kört.
@@ -1157,6 +1211,16 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapSixOpponentTwo.draw(batch);
 		}else if (lapCheckOpponentTwo == 7){
 			lapSevenOpponentTwo.draw(batch);
+			opponentTwoName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+			opponentTwo.setSpeedX(0);
+			opponentTwo.setSpeedY(0);
+			opponentThree.setSpeedX(0);
+			opponentThree.setSpeedY(0);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckOpponentTwo = 8;
+			}
 		}
 
 		//Ritar ut hur många varv motståndare två kört.
@@ -1174,11 +1238,21 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapSixOpponentThree.draw(batch);
 		}else if (lapCheckOpponentThree == 7){
 			lapSevenOpponentThree.draw(batch);
+			opponentThreeName.draw(batch);
+			opponentOne.setSpeedX(0);
+			opponentOne.setSpeedY(0);
+			opponentTwo.setSpeedX(0);
+			opponentTwo.setSpeedY(0);
+			opponentThree.setSpeedX(0);
+			opponentThree.setSpeedY(0);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckOpponentThree = 8;
+			}
 		}
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (lapCheck == 7 || lapCheckOpponentOne == 7 || lapCheckOpponentTwo == 7 || lapCheckOpponentThree == 7){
+		if (lapCheck == 8 || lapCheckOpponentOne == 8 || lapCheckOpponentTwo == 8 || lapCheckOpponentThree == 8){
 			gameState = GameState.FINISH;
 
 			player.setX(605);
@@ -1325,6 +1399,10 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapTwo.draw(batch);
 		}else if (lapCheck == 3){
 			lapThree.draw(batch);
+			playerNameMultiPlayer.draw(batch);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheck = 4;
+			}
 		}
 
 		//Ritar ut hur många varv motståndaren kört.
@@ -1334,11 +1412,15 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapTwoOpponentOne.draw(batch);
 		}else if (lapCheckPlayerTwo == 3){
 			lapThreeOpponentOne.draw(batch);
+			playerTwoName.draw(batch);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckPlayerTwo = 4;
+			}
 		}
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (lapCheck == 3 || lapCheckPlayerTwo == 3 ){
+		if (lapCheck == 4 || lapCheckPlayerTwo == 4){
 			gameState = GameState.LEVEL_CHANGE_MULTIPLAYER;
 
 			player.setX(605);
@@ -1505,6 +1587,10 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapFour.draw(batch);
 		}else if (lapCheck == 5) {
 			lapFive.draw(batch);
+			playerNameMultiPlayer.draw(batch);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheck = 6;
+			}
 		}
 
 		//Ritar ut hur många varv motståndare ett kört.
@@ -1518,11 +1604,15 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapFourOpponentOne.draw(batch);
 		}else if (lapCheckPlayerTwo == 5) {
 			lapFiveOpponentOne.draw(batch);
+			playerTwoName.draw(batch);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckPlayerTwo = 6;
+			}
 		}
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (lapCheck == 5 || lapCheckPlayerTwo == 5){
+		if (lapCheck == 6 || lapCheckPlayerTwo == 6){
 			gameState = GameState.LEVEL_CHANGE_MULTIPLAYER;
 
 			player.setX(605);
@@ -1699,6 +1789,10 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapSix.draw(batch);
 		}else if (lapCheck == 7){
 			lapSeven.draw(batch);
+			playerNameMultiPlayer.draw(batch);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheck = 8;
+			}
 		}
 
 		//Ritar ut hur många varv motståndare ett kört.
@@ -1716,11 +1810,15 @@ public class MyGdxGame extends ApplicationAdapter {
 			lapSixOpponentOne.draw(batch);
 		}else if (lapCheckPlayerTwo == 7){
 			lapSevenOpponentOne.draw(batch);
+			playerTwoName.draw(batch);
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+				lapCheckPlayerTwo = 8;
+			}
 		}
 		batch.end();
 
 		//När man kör klart så återställer denna IF-sats spelarens och motståndare etts position.
-		if (lapCheck == 7 || lapCheckPlayerTwo == 7){
+		if (lapCheck == 8 || lapCheckPlayerTwo == 8){
 			gameState = GameState.FINISH;
 
 			player.setX(605);

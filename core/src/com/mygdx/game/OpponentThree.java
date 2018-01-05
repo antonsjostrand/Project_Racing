@@ -35,35 +35,19 @@ public class OpponentThree extends Racer {
             setSpeedY(-3);
             setSpeedX(0);
         }
-        else if (getX() >= 70 && getX() < 80 && getY() >= 375 && getY() < 385) {
+        else if (getX() >= 70 && getX() < 80 && getY() >= 420 && getY() < 430) {
             setSpeedX(3);
             setSpeedY(0);
         }
-        else if (getX() >= 962 && getX() < 972 && getY() >= 375 && getY() < 385) {
-            setSpeedX(0);
-            setSpeedY(3);
-        }
-        else if (getX() >= 962 && getX() < 972 && getY() >= 407 && getY() < 417) {
-            setSpeedX(3);
-            setSpeedY(0);
-        }
-        else if (getX() >= 1143 && getX() < 1153 && getY() >= 407 && getY() < 417) {
+        else if (getX() >= 1143 && getX() < 1153 && getY() >= 420 && getY() < 430) {
             setSpeedX(0);
             setSpeedY(-3);
         }
-        else if (getX() >= 1143 && getX() < 1153 && getY() >= 259 && getY() < 269) {
+        else if (getX() >= 1143 && getX() < 1153 && getY() >= 220 && getY() < 230) {
             setSpeedX(-3);
             setSpeedY(0);
         }
-        else if (getX() >= 957 && getX() < 967 && getY() >= 259 && getY() < 269) {
-            setSpeedX(0);
-            setSpeedY(3);
-        }
-        else if (getX() >= 957 && getX() < 967 && getY() >= 282 && getY() < 292) {
-            setSpeedX(-3);
-            setSpeedY(0);
-        }
-        else if (getX() >= 70 && getX() < 80 && getY() >= 282 && getY() < 292) {
+        else if (getX() >= 70 && getX() < 80 && getY() >= 220 && getY() < 230) {
             setSpeedX(0);
             setSpeedY(-3);
         }
@@ -86,28 +70,16 @@ public class OpponentThree extends Racer {
         else if (getX() >= 70 && getX() < 80 && getY() >= 512 && getY() < 522) {
             getSprite().setRotation(270);
         }
-        else if (getX() >= 70 && getX() < 80 && getY() >= 385 && getY() < 395) {
+        else if (getX() >= 70 && getX() < 80 && getY() >= 420 && getY() < 430) {
             getSprite().setRotation(360);
         }
-        else if (getX() >= 962 && getX() < 972 && getY() >= 385 && getY() < 395) {
-            getSprite().setRotation(450);
-        }
-        else if (getX() >= 962 && getX() < 972 && getY() >= 407 && getY() < 417) {
-            getSprite().setRotation(360);
-        }
-        else if (getX() >= 1143 && getX() < 1153 && getY() >= 407 && getY() < 417) {
+        else if (getX() >= 1143 && getX() < 1153 && getY() >= 420 && getY() < 430) {
             getSprite().setRotation(270);
         }
-        else if (getX() >= 1143 && getX() < 1153 && getY() >= 259 && getY() < 269) {
+        else if (getX() >= 1143 && getX() < 1153 && getY() >= 220 && getY() < 230) {
             getSprite().setRotation(180);
         }
-        else if (getX() >= 957 && getX() < 967 && getY() >= 259 && getY() < 269) {
-            getSprite().setRotation(90);
-        }
-        else if (getX() >= 957 && getX() < 967 && getY() >= 282 && getY() < 292) {
-            getSprite().setRotation(180);
-        }
-        else if (getX() >= 70 && getX() < 80 && getY() >= 282 && getY() < 292) {
+        else if (getX() >= 70 && getX() < 80 && getY() >= 220 && getY() < 230) {
             getSprite().setRotation(270);
         }
         else if (getX() >= 70 && getX() < 80 && getY() >= 85 && getY() < 95) {

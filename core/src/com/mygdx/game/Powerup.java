@@ -171,7 +171,7 @@ public class Powerup extends Figure {
                 powerup.setY(powerupY);
             }
             if (powerupY <= 360){
-                powerupY = powerupY + 50;
+                powerupY = powerupY + 25;
                 powerup.setY(powerupY);
             }
             if  (powerupX <= 1135){
@@ -183,7 +183,7 @@ public class Powerup extends Figure {
                 powerup.setY(powerupY);
             }
             if (powerupY >= 300){
-                powerupY = powerupY - 50;
+                powerupY = powerupY - 25;
                 powerup.setY(powerupY);
             }
             if(powerupY >= 160){

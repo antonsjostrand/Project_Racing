@@ -71,13 +71,13 @@ public class Racer {
         if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
             antiCheatCount++;
         }
-        if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 0) {
+        if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 0) {
             antiCheatLaps = 1;
             antiCheatCount = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 1) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 1) {
             antiCheatLaps = 2;
             antiCheatCount = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 2) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCount > 0 && antiCheatLaps == 2) {
             antiCheatLaps = 3;
             antiCheatCount = 0;
         }
@@ -88,19 +88,19 @@ public class Racer {
         if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
             antiCheatCountLevelTwo++;
         }
-        if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 0) {
+        if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 0) {
             antiCheatLapsLevelTwo = 1;
             antiCheatCountLevelTwo = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 1) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 1) {
             antiCheatLapsLevelTwo = 2;
             antiCheatCountLevelTwo = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 2) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 2) {
             antiCheatLapsLevelTwo = 3;
             antiCheatCountLevelTwo = 0;
-        }else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 3) {
+        }else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 3) {
             antiCheatLapsLevelTwo = 4;
             antiCheatCountLevelTwo = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 4) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelTwo > 0 && antiCheatLapsLevelTwo == 4) {
             antiCheatLapsLevelTwo = 5;
             antiCheatCountLevelTwo = 0;
         }
@@ -111,25 +111,25 @@ public class Racer {
         if (racer.getX() >= 45 && racer.getX() <= 200 && racer.getY() >= 45 && racer.getY() <= 200) {
             antiCheatCountLevelThree++;
         }
-        if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 0) {
+        if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 0) {
             antiCheatLapsLevelThree = 1;
             antiCheatCountLevelThree = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 1) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 1) {
             antiCheatLapsLevelThree = 2;
             antiCheatCountLevelThree = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 2) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 2) {
             antiCheatLapsLevelThree = 3;
             antiCheatCountLevelThree = 0;
-        }else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 3) {
+        }else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 3) {
             antiCheatLapsLevelThree = 4;
             antiCheatCountLevelThree = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 4) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 4) {
             antiCheatLapsLevelThree = 5;
             antiCheatCountLevelThree = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 5) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 5) {
             antiCheatLapsLevelThree = 6;
             antiCheatCountLevelThree = 0;
-        } else if (racer.getX() >= 680 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 6) {
+        } else if (racer.getX() >= 665 && racer.getX() <= 693 && racer.getY() >= 46 && racer.getY() <= 205 && antiCheatCountLevelThree > 0 && antiCheatLapsLevelThree == 6) {
             antiCheatLapsLevelThree = 7;
             antiCheatCountLevelThree = 0;
         }
