@@ -11,7 +11,7 @@ public class Racer {
     private int laps = 0, antiCheatLaps = 0, antiCheatCount = 0;
     private int antiCheatLapsLevelTwo = 0, antiCheatCountLevelTwo = 0;
     private int antiCheatLapsLevelThree = 0, antiCheatCountLevelThree = 0;
-    private final float SHRINK_COLLISION_RADIUS_HEIGHT, SHRINK_COLLISION_RADIUS_WIDTH;
+    private final float SHRINK_HEIGHT, SHRINK_WIDTH;
 
 
     public Racer(String image, float x, float y, float sizeX, float sizeY){
@@ -19,8 +19,8 @@ public class Racer {
         sprite.setX(x);
         sprite.setY(y);
         sprite.setSize(sizeX, sizeY);
-        SHRINK_COLLISION_RADIUS_HEIGHT = getSprite().getHeight()/8;
-        SHRINK_COLLISION_RADIUS_WIDTH = getSprite().getWidth()/8;
+        SHRINK_HEIGHT = getSprite().getHeight()/8;
+        SHRINK_WIDTH = getSprite().getWidth()/8;
     }
 
     public float getX(){
@@ -188,20 +188,20 @@ public class Racer {
     //Används för att kontrollera om spelaren är utanför banan!
     public Rectangle getCollisionArea(){
         return new Rectangle(
-                getSprite().getX() + SHRINK_COLLISION_RADIUS_WIDTH + 5,
-                getSprite().getY() + SHRINK_COLLISION_RADIUS_HEIGHT + 5,
-                getSprite().getWidth() - (5*SHRINK_COLLISION_RADIUS_WIDTH),
-                getSprite().getHeight() - (5*SHRINK_COLLISION_RADIUS_HEIGHT)
+                getSprite().getX() + SHRINK_WIDTH + 5,
+                getSprite().getY() + SHRINK_HEIGHT + 5,
+                getSprite().getWidth() - (5*SHRINK_WIDTH),
+                getSprite().getHeight() - (5*SHRINK_HEIGHT)
         );
     }
 
     //Skapar en rektangel av ett objekt som sedan används för att kolla ifall det kolliderar på något sätt.
     public Rectangle getCollisionAreaRacer(){
         return new Rectangle(
-                getSprite().getX() + SHRINK_COLLISION_RADIUS_WIDTH + 5,
-                getSprite().getY() + SHRINK_COLLISION_RADIUS_HEIGHT + 5,
-                getSprite().getWidth() - (SHRINK_COLLISION_RADIUS_WIDTH + 3),
-                getSprite().getHeight() - (SHRINK_COLLISION_RADIUS_HEIGHT)
+                getSprite().getX() + SHRINK_WIDTH + 5,
+                getSprite().getY() + SHRINK_HEIGHT + 5,
+                getSprite().getWidth() - (SHRINK_WIDTH + 3),
+                getSprite().getHeight() - (SHRINK_HEIGHT)
         );
     }
     //Används för att kontrollera om man kolliderar med powerup eller obstacle
