@@ -20,39 +20,39 @@ public class OpponentThree extends Racer {
 
     public void followTrackLevelThree(){
         if (getX() >= 598 && getX() <= 610 && getY() >= 85 && getY() < 95) {
-            setSpeedX(3);
+            setSpeedX(3.1f);
             setSpeedY(0);
         }
         else if ((getX() >= 1240 && getX() <= 1320) && (getY() >= 85 && getY() < 110)) {
             setSpeedX(0);
-            setSpeedY(3);
+            setSpeedY(3.1f);
         }
         else if (getX() >= 1240 && getX() <= 1320 && (getY() >= 512 && getY() < 522)) {
-            setSpeedX(-3);
+            setSpeedX(-3.1f);
             setSpeedY(0);
         }
         else if (getX() >= 70 && getX() < 80 && getY() >= 512 && getY() < 522) {
-            setSpeedY(-3);
+            setSpeedY(-3.1f);
             setSpeedX(0);
         }
         else if (getX() >= 70 && getX() < 80 && getY() >= 420 && getY() < 430) {
-            setSpeedX(3);
+            setSpeedX(3.1f);
             setSpeedY(0);
         }
         else if (getX() >= 1143 && getX() < 1153 && getY() >= 420 && getY() < 430) {
             setSpeedX(0);
-            setSpeedY(-3);
+            setSpeedY(-3.1f);
         }
         else if (getX() >= 1143 && getX() < 1153 && getY() >= 220 && getY() < 230) {
-            setSpeedX(-3);
+            setSpeedX(-3.1f);
             setSpeedY(0);
         }
         else if (getX() >= 70 && getX() < 80 && getY() >= 220 && getY() < 230) {
             setSpeedX(0);
-            setSpeedY(-3);
+            setSpeedY(-3.1f);
         }
         else if (getX() >= 70 && getX() < 80 && getY() >= 85 && getY() < 95) {
-            setSpeedX(3);
+            setSpeedX(3.1f);
             setSpeedY(0);
         }
     }
