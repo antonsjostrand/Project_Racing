@@ -149,12 +149,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		lapSevenOpponentThree = new PlayState("LapSeven.png",1292,625,50,50);
 
 		//Skapar texterna som visar vinnaren.
-		playerName = new PlayState("PlayerName.png",590,630,162,48);
-		playerNameMultiPlayer = new PlayState("PlayerName.png",935,660,162,48);
-		playerTwoName = new PlayState("PlayerTwoName.png",935,660,162,48);
-		opponentOneName = new PlayState("OpponentOneName.png",545,630,248,48);
-		opponentTwoName = new PlayState("OpponentTwoName.png",545,630,248,48);
-		opponentThreeName = new PlayState("OpponentThreeName.png",545,630,248,48);
+		playerName = new PlayState("PlayerName.png",590,620,162,69);
+		playerNameMultiPlayer = new PlayState("PlayerName.png",935,640,162,69);
+		playerTwoName = new PlayState("PlayerTwoName.png",935,640,162,69);
+		opponentOneName = new PlayState("OpponentOneName.png",545,620,248,69);
+		opponentTwoName = new PlayState("OpponentTwoName.png",545,620,248,69);
+		opponentThreeName = new PlayState("OpponentThreeName.png",545,620,248,69);
 
 	}
 	//Skapar level ett och rektanglar som representerar en del av banan.
